@@ -21,7 +21,7 @@ const useChartCard = () => {
 
   useEffect(() => {
     const handleNewData = (latestChartData: { data: ISensorData[] }) => {
-      console.log("Received new chart data: ", latestChartData);
+      // console.log("Received new chart data: ", latestChartData);
       setLatestChart(latestChartData);
     };
 

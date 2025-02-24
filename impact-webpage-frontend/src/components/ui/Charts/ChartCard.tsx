@@ -130,7 +130,6 @@ const ChartCard = (props: PropTypes) => {
   };
 
   const isLoading = !latestChart || !latestChart.data.length;
-  console.log(isLoading);
 
   return (
     <Card className="mb-4 dark:bg-primary-800">

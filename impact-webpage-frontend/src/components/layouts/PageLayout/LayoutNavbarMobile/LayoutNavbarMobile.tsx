@@ -47,7 +47,7 @@ const LayoutNavbarMobile = (props: PropType) => {
                 "bg-teal-500 text-white": router.pathname.startsWith(item.href),
               })}
               startContent={item.icon}
-              textValue={item.label}
+              value={item.label}
               aria-labelledby={item.label}
               aria-describedby={item.label}
               as={Link}
