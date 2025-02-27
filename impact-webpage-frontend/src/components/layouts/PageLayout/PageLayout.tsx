@@ -6,6 +6,7 @@ import { LAYOUTNAVBAR_ITEMS } from "./LayoutNavbar.constant";
 import { Button, NavbarMenuToggle } from "@heroui/react";
 import { FaHamburger } from "react-icons/fa";
 import LayoutNavbarMobile from "./LayoutNavbarMobile";
+import Footer from "./Footer";
 
 interface PropTypes {
   children: ReactNode;
@@ -24,14 +25,15 @@ const PageLayout = (props: PropTypes) => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
-        <div className="h-screen w-full overflow-y-auto">
+        <div className="flex min-h-screen w-full flex-grow flex-col overflow-y-auto">
           <LayoutNavbarMobile
             navbarItems={LAYOUTNAVBAR_ITEMS}
             navbarIsOpen={isOpen}
             setNavbarIsOpen={setIsOpen}
           />
           <TopBar navbarIsOpen={isOpen} setNavBarIsOpen={setIsOpen} />
-          {children}
+          <div className="flex-grow overflow-y-auto">{children}</div>
+          <Footer />
         </div>
       </div>
     </Fragment>

@@ -7,9 +7,7 @@ import { HourlyAverage } from "../utils/interface";
 export default class SensorController {
   static async sendLatestSensorData(io: Server) {
     try {
-      const latestSensor = await SensorModel.find()
-        .sort({ createdAt: -1 })
-        .limit(1);
+      const latestSensor = await SensorModel.findOne().sort({ createdAt: -1 });
       socketResponse.success(
         io,
         "latestSensorData",

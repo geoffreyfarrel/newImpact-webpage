@@ -20,7 +20,7 @@ const LayoutNavbar = (props: PropTypes) => {
   return (
     <div
       className={cn(
-        "relative z-50 hidden h-screen flex-col justify-between bg-teal-500 px-4 py-6 transition-all dark:bg-background lg:flex", // Hidden on smaller screens, visible on lg and above
+        "relative z-50 hidden h-auto min-h-screen flex-col justify-between bg-teal-500 px-4 py-6 transition-all dark:bg-background lg:flex lg:flex-grow", // Hidden on smaller screens, visible on lg and above
         {
           "w-full max-w-[300px]": isOpen, // Full width when isOpen is true
           "w-[175px] max-w-[175px]": !isOpen, // Half width when isOpen is false

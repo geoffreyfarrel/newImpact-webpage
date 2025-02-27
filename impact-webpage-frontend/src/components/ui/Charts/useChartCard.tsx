@@ -1,13 +1,10 @@
-import chartServices from "@/services/chart.services";
 import socketServices from "@/services/socket.services";
-import { ISensorData } from "@/types/Chart";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { ISensorData } from "@/types/Sensor";
 import { useEffect, useState } from "react";
-import { COLOR_PALETTE } from "./ChartCard.constant";
+import { COLOR_PALETTE_CHART } from "./ChartCard.constant";
 
 const SENSOR_TYPES: Array<
-  keyof typeof COLOR_PALETTE | "temperature" | "conductivity"
+  keyof typeof COLOR_PALETTE_CHART | "temperature" | "conductivity"
 > = ["temperature", "pH", "conductivity", "oxygen", "ppm", "pm25"];
 
 const useChartCard = () => {
@@ -15,7 +12,7 @@ const useChartCard = () => {
     data: ISensorData[];
   } | null>(null);
   const [currentSensor, setCurrentSensor] = useState<
-    keyof typeof COLOR_PALETTE | "temperature" | "conductivity"
+    keyof typeof COLOR_PALETTE_CHART | "temperature" | "conductivity"
   >("pH");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -46,13 +43,13 @@ const useChartCard = () => {
 
   const colorPallete =
     latestChart?.data &&
-    COLOR_PALETTE[currentSensor as keyof typeof COLOR_PALETTE]
-      ? COLOR_PALETTE[currentSensor as keyof typeof COLOR_PALETTE](
+    COLOR_PALETTE_CHART[currentSensor as keyof typeof COLOR_PALETTE_CHART]
+      ? COLOR_PALETTE_CHART[currentSensor as keyof typeof COLOR_PALETTE_CHART](
           latestChart.data
             .map((item) => Number(item[currentSensor as keyof typeof item])) // 🔹 Ensure values are numbers
             .filter((value) => !isNaN(value)), // 🔹 Remove NaN values if conversion fails
         )
-      : COLOR_PALETTE.default(latestChart?.data?.map(() => 0) || []);
+      : COLOR_PALETTE_CHART.default(latestChart?.data?.map(() => 0) || []);
 
   return { colorPallete, latestChart, currentSensor, setCurrentSensor };
 };

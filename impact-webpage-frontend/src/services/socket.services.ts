@@ -19,23 +19,45 @@ if (typeof window !== "undefined") {
   socket = window.socketInstance;
 }
 
+// Store active event listeners to prevent duplicates
+const eventListeners = new Map<string, Set<(data: any) => void>>();
+
 const socketServices = {
   on(event: string, callback: (data: any) => void) {
     if (socket) {
-      socket.off(event);
-      socket.on(event, callback);
+      // Prevent duplicate listeners for the same event/callback
+      if (!eventListeners.has(event)) {
+        eventListeners.set(event, new Set());
+      }
+
+      const callbacks = eventListeners.get(event);
+      if (callbacks && !callbacks.has(callback)) {
+        callbacks.add(callback);
+        socket.on(event, callback); // Attach listener only if it's new
+      }
     }
   },
-  off(event: string, callback: (data: any) => void) {
+  off(event: string, callback?: (data: any) => void) {
     if (socket) {
-      socket.off(event);
-      socket.on(event, callback);
+      if (callback) {
+        // Remove only the specific callback if provided
+        const callbacks = eventListeners.get(event);
+        if (callbacks && callbacks.has(callback)) {
+          callbacks.delete(callback);
+          socket.off(event, callback);
+        }
+      } else {
+        // Remove all listeners for this event if no callback is provided
+        eventListeners.delete(event);
+        socket.off(event);
+      }
     }
   },
   disconnect() {
     if (socket) {
       console.log("Manually disconnecting socket.");
       socket.disconnect();
+      eventListeners.clear(); // Clear stored listeners
     }
   },
 };

@@ -1,4 +1,4 @@
-export const COLOR_PALETTE: Record<
+export const COLOR_PALETTE_CHART: Record<
   "pH" | "oxygen" | "ppm" | "pm25" | "default",
   (data: number[]) => string[]
 > = {

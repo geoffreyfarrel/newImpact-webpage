@@ -132,7 +132,7 @@ const ChartCard = (props: PropTypes) => {
   const isLoading = !latestChart || !latestChart.data.length;
 
   return (
-    <Card className="mb-4 dark:bg-primary-800">
+    <Card className="mb-4 px-4 dark:bg-primary-800">
       <CardHeader className="flex justify-between">
         {title}
         <Dropdown>

@@ -8,7 +8,7 @@ import {
   DropdownTrigger,
 } from "@heroui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdSunny } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -61,7 +61,11 @@ const TopBar = (props: PropTypes) => {
           >
             <Dropdown isOpen={isOpen}>
               <DropdownTrigger>
-                <Button variant="light" className="hover:!bg-transparent">
+                <Button
+                  variant="light"
+                  className="hover:!bg-transparent"
+                  onPressStart={() => setIsOpen(!isOpen)}
+                >
                   <Avatar src="/img/en-flag.png" />
                 </Button>
               </DropdownTrigger>
@@ -103,7 +107,7 @@ const TopBar = (props: PropTypes) => {
               variant="light"
               onPress={() => setNavBarIsOpen(!navbarIsOpen)}
             >
-              <RxHamburgerMenu className="text-2xl" />
+              <RxHamburgerMenu className="text-2xl text-white" />
             </Button>
           </div>
         </div>

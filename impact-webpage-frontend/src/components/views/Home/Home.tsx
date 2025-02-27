@@ -17,55 +17,92 @@ const Home = () => {
       </h1>
       <PageTitle title="Home" />
       <Charts title="Latest Result" />
-      <div className="flex-col">
-        <div className="flex w-full flex-col">
-          <SensorCard
-            sensorName="Time"
-            sensorValue={formatISOTimeWithDate("2023-09-01 00:00:00")}
-            isTimeCard
-            isLoading={isLoading}
-          />
-          <div className="flex justify-center gap-4 lg:flex-row">
-            <SensorCard
-              sensorName="Temperature"
-              sensorValue={25}
-              isLoading={isLoading}
-            />
-            <SensorCard
-              sensorName="pH"
-              sensorValue={7}
-              indicatorColor="blue"
-              indicatorValue="Normal"
-              isLoading={isLoading}
-            />
-            <SensorCard
-              sensorName="oxygen"
-              sensorValue={80}
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
-        <div className="flex w-full flex-col">
-          <div className="flex flex-row justify-center gap-4">
-            <SensorCard
-              sensorName="Conductivity"
-              sensorValue={25}
-              isLoading={isLoading}
-            />
-            <SensorCard
-              sensorName="PPM"
-              sensorValue={7}
-              indicatorColor="blue"
-              indicatorValue="Normal"
-              isLoading={isLoading}
-            />
-            <SensorCard
-              sensorName="PM2.5"
-              sensorValue={80}
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
+      <div className="">
+        <SensorCard
+          sensorName="Time"
+          sensorType="createdAt"
+          isTimeCard
+          isLoading={isLoading}
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-x-4 gap-y-1 md:grid-cols-2 lg:grid-cols-3">
+        <SensorCard
+          sensorName="Temperature"
+          sensorType="temperature"
+          isLoading={isLoading}
+        />
+        <SensorCard
+          sensorName="pH"
+          sensorType="pH"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="Dissolved Oxygen"
+          sensorType="oxygen"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="Conductivity"
+          sensorType="conductivity"
+          isLoading={isLoading}
+        />
+        <SensorCard
+          sensorName="Dissolved Solid"
+          sensorType="ppm"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="PM2.5"
+          sensorType="pm25"
+          isLoading={isLoading}
+        />
+      </div>
+      <Charts title="Latest Result" />
+      <div className="">
+        <SensorCard
+          sensorName="Time"
+          sensorType="createdAt"
+          isTimeCard
+          isLoading={isLoading}
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-x-4 gap-y-1 md:grid-cols-2 lg:grid-cols-3">
+        <SensorCard
+          sensorName="Temperature"
+          sensorType="temperature"
+          isLoading={isLoading}
+        />
+        <SensorCard
+          sensorName="pH"
+          sensorType="pH"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="Dissolved Oxygen"
+          sensorType="oxygen"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="Conductivity"
+          sensorType="conductivity"
+          isLoading={isLoading}
+        />
+        <SensorCard
+          sensorName="Dissolved Solid"
+          sensorType="ppm"
+          isLoading={isLoading}
+          isIndicator
+        />
+        <SensorCard
+          sensorName="PM2.5"
+          sensorType="pm25"
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
