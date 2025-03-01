@@ -44,13 +44,15 @@ const LayoutNavbarMobile = (props: PropType) => {
             <ListboxItem
               key={item.key}
               className={cn("my-1 h-12 hover:!bg-teal-300/40", {
-                "bg-teal-500 text-white": router.pathname.startsWith(item.href),
+                "bg-teal-500 text-white": router.pathname === item.href,
               })}
               startContent={item.icon}
               textValue={item.label}
               aria-labelledby={item.label}
               aria-describedby={item.label}
               as={Link}
+              // onPress={() => router.push(item.href)}
+              onPress={() => (window.location.href = item.href)}
               href={item.href}
             >
               <p className="">{item.label}</p>

@@ -16,4 +16,20 @@ const formatISOTimeWithDate = (isoTimeString: string | Date) => {
   return date.toISOString().slice(0, 16).replace("T", " ");
 };
 
-export { convertToTaiwanTime, convertToUTCTime, formatISOTimeWithDate };
+const formatOnlyDate = (isoTimeString: string | Date) => {
+  const date = new Date(isoTimeString);
+  return date.toISOString().split("T")[0];
+};
+
+const formatOnlyTime = (isoTimeString: string | Date): string => {
+  const date = new Date(isoTimeString);
+  return date.toISOString().split("T")[1].slice(0, 5);
+};
+
+export {
+  convertToTaiwanTime,
+  convertToUTCTime,
+  formatISOTimeWithDate,
+  formatOnlyDate,
+  formatOnlyTime,
+};

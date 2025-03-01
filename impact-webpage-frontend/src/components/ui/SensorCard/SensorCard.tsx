@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Card, CardBody, Skeleton } from "@heroui/react";
+import { Badge, Card, CardBody, Skeleton } from "@heroui/react";
 import useSensorCard from "./useSensorCard";
 import { MappedSensorData } from "@/types/Sensor";
 
@@ -12,10 +12,12 @@ interface PropTypes {
 }
 
 const SensorCard = (props: PropTypes) => {
-  const { isIndicator, isLoading, isTimeCard, sensorName, sensorType } = props;
+  const { isIndicator, isTimeCard, sensorName, sensorType } = props;
 
   const { latestSensor } = useSensorCard();
-  console.log("Latest sensor data: ", latestSensor);
+  // console.log("Latest sensor data: ", latestSensor);
+
+  const isLoading = !latestSensor;
 
   return (
     <div className="my-2">
@@ -29,7 +31,7 @@ const SensorCard = (props: PropTypes) => {
         </div>
       ) : (
         <Card
-          className={cn("flex h-full flex-col border-l-4 dark:bg-primary-800", {
+          className={cn("flex h-full flex-col border-l-4 dark:bg-primary-600", {
             "border-x-0 border-y-3 border-teal-500 dark:border-teal-500/70":
               sensorType === "createdAt",
             "border-red-600/80": sensorType === "temperature",
@@ -60,12 +62,12 @@ const SensorCard = (props: PropTypes) => {
                   {sensorName}
                 </h3>
               )}
-              <h4 className="text-lg">
+              <h4 className={cn("text-lg", { "font-semibold": isTimeCard })}>
                 {latestSensor?.[sensorType as keyof MappedSensorData].value}
               </h4>
             </div>
             {isIndicator && (
-              <div className="flex flex-col text-right">
+              <div className="flex flex-col items-end gap-1 text-right">
                 <h4 className="text-sm font-semibold md:text-base lg:text-xl">
                   {
                     latestSensor?.[sensorType as keyof MappedSensorData]
@@ -75,6 +77,14 @@ const SensorCard = (props: PropTypes) => {
                 <h4 className="text-base">
                   {latestSensor?.[sensorType as keyof MappedSensorData].color}
                 </h4>
+                <div
+                  className="h-10 w-10 rounded-full"
+                  style={{
+                    backgroundColor:
+                      latestSensor?.[sensorType as keyof MappedSensorData]
+                        .color,
+                  }}
+                ></div>
               </div>
             )}
           </CardBody>

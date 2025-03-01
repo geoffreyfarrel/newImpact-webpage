@@ -5,6 +5,10 @@ import {
   COLOR_PALETTE_SENSOR_CARD,
   INDICATOR_TEXT,
 } from "./SensorCard.constant";
+import {
+  convertToTaiwanTime,
+  formatISOTimeWithDate,
+} from "@/utils/timeFormatter";
 
 const useSensorCard = () => {
   const [latestSensor, setLatestSensor] = useState<MappedSensorData | null>(
@@ -39,7 +43,9 @@ const useSensorCard = () => {
           indicator: INDICATOR_TEXT.pm25(latestSensorData.data.pm25),
         },
         createdAt: {
-          value: latestSensorData.data.createdAt as string,
+          value: formatISOTimeWithDate(
+            convertToTaiwanTime(latestSensorData.data.createdAt as string),
+          ),
           color: undefined,
           indicator: undefined,
         }, // Keep raw timestamp

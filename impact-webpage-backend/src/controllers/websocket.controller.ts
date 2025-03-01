@@ -86,6 +86,25 @@ export default class SensorController {
     }
   }
 
+  static async sendLatestDataTableData(io: Server) {
+    try {
+      const result = await SensorModel.find().sort({ createdAt: -1 }).limit(50);
+      socketResponse.success(
+        io,
+        "LatestDataTableData",
+        result,
+        "Success find latest 50 data"
+      );
+    } catch (error) {
+      socketResponse.error(
+        io,
+        "LatestDataTableData",
+        error,
+        "Failed to find 50 data"
+      );
+    }
+  }
+
   static setupSocket(io: Server) {
     let connectedClients = 0;
     io.on("connection", async (socket) => {
@@ -95,6 +114,7 @@ export default class SensorController {
 
       await SensorController.sendLatestSensorData(io);
       await SensorController.sendLatestChartSensorData(io);
+      await SensorController.sendLatestDataTableData(io);
 
       socket.on("disconnect", () => {
         // console.log(`Client disconnected: ${socket.id}`);
@@ -108,6 +128,7 @@ export default class SensorController {
       console.log("New sensor data detected in database!");
       await SensorController.sendLatestSensorData(io);
       await SensorController.sendLatestChartSensorData(io);
+      await SensorController.sendLatestDataTableData(io);
     });
   }
 }

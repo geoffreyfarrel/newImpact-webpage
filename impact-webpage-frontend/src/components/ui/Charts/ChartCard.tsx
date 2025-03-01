@@ -23,7 +23,11 @@ import {
   ChartOptions,
 } from "chart.js";
 import useChartCard from "./useChartCard";
-import { formatISOTimeWithDate } from "@/utils/timeFormatter";
+import {
+  convertToTaiwanTime,
+  formatISOTimeWithDate,
+  formatOnlyDate,
+} from "@/utils/timeFormatter";
 import { useTheme } from "next-themes";
 import { CiMenuKebab } from "react-icons/ci";
 
@@ -58,7 +62,7 @@ const ChartCard = (props: PropTypes) => {
 
   let labels = latestChart?.data.map((item) => {
     const date = new Date(item.createdAt);
-    return formatISOTimeWithDate(date);
+    return formatISOTimeWithDate(convertToTaiwanTime(date));
   });
 
   const data = {
@@ -130,11 +134,30 @@ const ChartCard = (props: PropTypes) => {
   };
 
   const isLoading = !latestChart || !latestChart.data.length;
+  const dateStart = latestChart?.data?.length
+    ? formatOnlyDate(
+        formatISOTimeWithDate(
+          convertToTaiwanTime(new Date(latestChart.data[0].createdAt)),
+        ),
+      )
+    : null;
+  const dateEnd = latestChart?.data?.length
+    ? formatOnlyDate(
+        formatISOTimeWithDate(
+          convertToTaiwanTime(
+            new Date(latestChart.data[latestChart.data.length - 1].createdAt),
+          ),
+        ),
+      )
+    : null;
 
   return (
     <Card className="mb-4 px-4 dark:bg-primary-800">
       <CardHeader className="flex justify-between">
-        {title}
+        <div>{title}</div>
+        <div className="font-semibold">
+          {dateStart} - {dateEnd}
+        </div>
         <Dropdown>
           <DropdownTrigger>
             <Button className="hover:!bg-transparent" variant="light">

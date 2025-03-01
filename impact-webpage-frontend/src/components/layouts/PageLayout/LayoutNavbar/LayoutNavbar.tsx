@@ -68,13 +68,15 @@ const LayoutNavbar = (props: PropTypes) => {
                   "text-2xl": isOpen, // Larger font size when open
                   "text-base": !isOpen, // Smaller font size when closed
                   "bg-white text-teal-600 dark:bg-primary-700 dark:text-white":
-                    router.pathname.startsWith(item.href),
+                    router.pathname === item.href,
                 },
               )}
               startContent={item.icon}
               textValue={item.label}
               aria-labelledby={item.label}
               aria-describedby={item.label}
+              // onPress={() => router.push(item.href)}
+              onPress={() => (window.location.href = item.href)}
               as={Link}
               href={item.href}
             >
