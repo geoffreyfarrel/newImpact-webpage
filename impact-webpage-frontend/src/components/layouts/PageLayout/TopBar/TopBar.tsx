@@ -31,6 +31,7 @@ const TopBar = (props: PropTypes) => {
                 src="/img/dmcl-logo.png"
                 width={300}
                 height={300}
+                priority
               />
             </li>
             <li className="p-2">
@@ -39,6 +40,7 @@ const TopBar = (props: PropTypes) => {
                 src="/img/ntpu-logo.png"
                 width={300}
                 height={300}
+                priority
               />
             </li>
             <li className="p-2">
@@ -47,6 +49,7 @@ const TopBar = (props: PropTypes) => {
                 src="/img/honhui-logo.png"
                 width={300}
                 height={300}
+                priority
               />
             </li>
           </ul>

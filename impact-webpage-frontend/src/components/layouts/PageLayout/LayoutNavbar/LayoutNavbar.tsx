@@ -75,8 +75,7 @@ const LayoutNavbar = (props: PropTypes) => {
               textValue={item.label}
               aria-labelledby={item.label}
               aria-describedby={item.label}
-              // onPress={() => router.push(item.href)}
-              onPress={() => (window.location.href = item.href)}
+              onPress={() => router.push(item.href)}
               as={Link}
               href={item.href}
             >

@@ -51,8 +51,7 @@ const LayoutNavbarMobile = (props: PropType) => {
               aria-labelledby={item.label}
               aria-describedby={item.label}
               as={Link}
-              // onPress={() => router.push(item.href)}
-              onPress={() => (window.location.href = item.href)}
+              onPress={() => router.push(item.href)}
               href={item.href}
             >
               <p className="">{item.label}</p>

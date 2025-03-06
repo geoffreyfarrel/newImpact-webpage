@@ -1,4 +1,5 @@
 import AppShell from "@/components/commons/AppShell/AppShell";
+import { WebSocketProvider } from "@/contexts/WebSocketContext";
 import "@/styles/globals.css";
 import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -20,7 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <NextThemesProvider attribute="class" defaultTheme="light">
           <AppShell>
-            <Component {...pageProps} />
+            <WebSocketProvider>
+              <Component {...pageProps} />
+            </WebSocketProvider>
           </AppShell>
         </NextThemesProvider>
       </QueryClientProvider>

@@ -1,65 +1,37 @@
-import environment from "@/config/environment";
 import io, { Socket } from "socket.io-client";
+import environment from "@/config/environment";
 
 declare global {
   interface Window {
-    socketInstance?: any;
+    socketInstance?: Socket;
   }
 }
 
-let socket: Socket | null = null;
+const getSocket = (): Socket => {
+  if (typeof window === "undefined")
+    throw new Error("WebSocket is not available on the server.");
 
-if (typeof window !== "undefined") {
-  // Ensure only one WebSocket connection per browser session
   if (!window.socketInstance) {
+    // console.log("🔄 Initializing WebSocket...");
     window.socketInstance = io(environment.SOCKET_URL, {
       transports: ["websocket"],
+      reconnectionAttempts: 10,
+      reconnectionDelay: 2000,
+    });
+
+    // window.socketInstance.on("connect", () =>
+    //   console.log("✅ WebSocket Connected"),
+    // );
+    // window.socketInstance.on("disconnect", (reason) =>
+    //   console.warn("⚠️ WebSocket Disconnected:", reason),
+    // );
+    window.socketInstance.on("connect_error", (err) => {
+      // console.error("❌ WebSocket Connection Error:", err);
+      setTimeout(() => window.socketInstance?.connect(), 2000);
     });
   }
-  socket = window.socketInstance;
-}
 
-// Store active event listeners to prevent duplicates
-const eventListeners = new Map<string, Set<(data: any) => void>>();
-
-const socketServices = {
-  on(event: string, callback: (data: any) => void) {
-    if (socket) {
-      // Prevent duplicate listeners for the same event/callback
-      if (!eventListeners.has(event)) {
-        eventListeners.set(event, new Set());
-      }
-
-      const callbacks = eventListeners.get(event);
-      if (callbacks && !callbacks.has(callback)) {
-        callbacks.add(callback);
-        socket.on(event, callback); // Attach listener only if it's new
-      }
-    }
-  },
-  off(event: string, callback?: (data: any) => void) {
-    if (socket) {
-      if (callback) {
-        // Remove only the specific callback if provided
-        const callbacks = eventListeners.get(event);
-        if (callbacks && callbacks.has(callback)) {
-          callbacks.delete(callback);
-          socket.off(event, callback);
-        }
-      } else {
-        // Remove all listeners for this event if no callback is provided
-        eventListeners.delete(event);
-        socket.off(event);
-      }
-    }
-  },
-  disconnect() {
-    if (socket) {
-      console.log("Manually disconnecting socket.");
-      socket.disconnect();
-      eventListeners.clear(); // Clear stored listeners
-    }
-  },
+  return window.socketInstance; // ✅ Always return the same instance
 };
 
-export default socketServices;
+export default getSocket;

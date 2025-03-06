@@ -32,7 +32,9 @@ const PageLayout = (props: PropTypes) => {
             setNavbarIsOpen={setIsOpen}
           />
           <TopBar navbarIsOpen={isOpen} setNavBarIsOpen={setIsOpen} />
-          <div className="flex-grow overflow-y-auto">{children}</div>
+          <div className="flex-grow overflow-y-auto">
+            <div className="m-6">{children}</div>
+          </div>
           <Footer />
         </div>
       </div>

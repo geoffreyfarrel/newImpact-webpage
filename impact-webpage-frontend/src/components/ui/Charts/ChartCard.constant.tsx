@@ -1,4 +1,4 @@
-export const COLOR_PALETTE_CHART: Record<
+const COLOR_PALETTE_CHART: Record<
   "pH" | "oxygen" | "ppm" | "pm25" | "default",
   (data: number[]) => string[]
 > = {
@@ -55,3 +55,31 @@ export const COLOR_PALETTE_CHART: Record<
   },
   default: (data: number[]) => data.map(() => "rgba(20, 184, 166, 1)"), // Teal for undefined sensors
 };
+
+const SENSOR_LABEL = (sensorType: string) => {
+  switch (sensorType) {
+    case "temperature":
+      return "Water Temperature";
+    case "pH":
+      return "Acidity";
+    case "oxygen":
+      return "Dissolved Oxygen";
+    case "conductivity":
+      return "Conductivity";
+    case "ppm":
+      return "Dissolved Solid";
+    case "pm25":
+      return "PM2.5 (Air Pollution)";
+  }
+};
+
+const SENSOR_TYPES = [
+  "temperature",
+  "pH",
+  "conductivity",
+  "oxygen",
+  "ppm",
+  "pm25",
+];
+
+export { COLOR_PALETTE_CHART, SENSOR_LABEL, SENSOR_TYPES };

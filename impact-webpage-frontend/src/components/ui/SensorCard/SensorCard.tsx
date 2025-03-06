@@ -1,21 +1,18 @@
 import { cn } from "@/utils/cn";
 import { Badge, Card, CardBody, Skeleton } from "@heroui/react";
-import useSensorCard from "./useSensorCard";
-import { MappedSensorData } from "@/types/Sensor";
+import { ISensorData, MappedSensorData } from "@/types/Sensor";
 
 interface PropTypes {
-  isLoading: boolean;
   isTimeCard?: boolean;
+  latestSensor: MappedSensorData | null;
   sensorName: string;
   sensorType: string;
   isIndicator?: boolean;
 }
 
 const SensorCard = (props: PropTypes) => {
-  const { isIndicator, isTimeCard, sensorName, sensorType } = props;
-
-  const { latestSensor } = useSensorCard();
-  // console.log("Latest sensor data: ", latestSensor);
+  const { isIndicator, isTimeCard, latestSensor, sensorName, sensorType } =
+    props;
 
   const isLoading = !latestSensor;
 
@@ -68,14 +65,11 @@ const SensorCard = (props: PropTypes) => {
             </div>
             {isIndicator && (
               <div className="flex flex-col items-end gap-1 text-right">
-                <h4 className="text-sm font-semibold md:text-base lg:text-xl">
+                <h4 className="text-sm md:text-base lg:text-xl">
                   {
                     latestSensor?.[sensorType as keyof MappedSensorData]
                       .indicator
                   }
-                </h4>
-                <h4 className="text-base">
-                  {latestSensor?.[sensorType as keyof MappedSensorData].color}
                 </h4>
                 <div
                   className="h-10 w-10 rounded-full"

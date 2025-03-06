@@ -22,17 +22,23 @@ import {
   PointElement,
   ChartOptions,
 } from "chart.js";
-import useChartCard from "./useChartCard";
 import {
   convertToTaiwanTime,
   formatISOTimeWithDate,
   formatOnlyDate,
+  formatOnlyTime,
 } from "@/utils/timeFormatter";
 import { useTheme } from "next-themes";
 import { CiMenuKebab } from "react-icons/ci";
+import { SENSOR_LABEL } from "./ChartCard.constant";
+import { ISensorData } from "@/types/Sensor";
 
 interface PropTypes {
   title: string;
+  colorPallete: string[];
+  latestChart: { data: ISensorData[] } | null;
+  currentSensor: string;
+  setCurrentSensor: (sensor: string) => void;
 }
 
 ChartJS.register(
@@ -45,31 +51,21 @@ ChartJS.register(
   Legend,
 );
 
-const SENSOR_TYPES = [
-  "temperature",
-  "pH",
-  "conductivity",
-  "oxygen",
-  "ppm",
-  "pm25",
-];
-
 const ChartCard = (props: PropTypes) => {
   const { theme } = useTheme();
-  const { title } = props;
-  const { colorPallete, latestChart, currentSensor, setCurrentSensor } =
-    useChartCard();
+  const { colorPallete, currentSensor, latestChart, setCurrentSensor, title } =
+    props;
 
   let labels = latestChart?.data.map((item) => {
     const date = new Date(item.createdAt);
-    return formatISOTimeWithDate(convertToTaiwanTime(date));
+    return formatOnlyTime(formatISOTimeWithDate(convertToTaiwanTime(date)));
   });
 
   const data = {
     labels,
     datasets: [
       {
-        label: `${currentSensor.toUpperCase()}`,
+        label: `${SENSOR_LABEL(currentSensor)?.toUpperCase()}`,
         data:
           latestChart?.data.map(
             (item) => item[currentSensor as keyof typeof item],
@@ -95,7 +91,9 @@ const ChartCard = (props: PropTypes) => {
           color: theme === "dark" ? "white" : "black",
           font: {
             weight: "bold",
+            size: 24,
           },
+          boxWidth: 0,
         },
       },
     },
@@ -140,7 +138,7 @@ const ChartCard = (props: PropTypes) => {
           convertToTaiwanTime(new Date(latestChart.data[0].createdAt)),
         ),
       )
-    : null;
+    : "Start";
   const dateEnd = latestChart?.data?.length
     ? formatOnlyDate(
         formatISOTimeWithDate(
@@ -149,7 +147,7 @@ const ChartCard = (props: PropTypes) => {
           ),
         ),
       )
-    : null;
+    : "End";
 
   return (
     <Card className="mb-4 px-4 dark:bg-primary-800">
