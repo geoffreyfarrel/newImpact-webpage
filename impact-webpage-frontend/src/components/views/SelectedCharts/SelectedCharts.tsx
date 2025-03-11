@@ -1,62 +1,114 @@
 import ChartCard from "@/components/ui/Charts";
 import useSelectedCharts from "./useSelectedCharts";
-import { getLocalTimeZone, parseDate } from "@internationalized/date";
-import {
-  Button,
-  DateRangePicker,
-  DateValue,
-  RangeValue,
-  Select,
-  SelectItem,
-} from "@heroui/react";
-import { useState } from "react";
-import { useDateFormatter } from "@react-aria/i18n";
+import { Button, DateRangePicker, Select, SelectItem } from "@heroui/react";
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import { CHART_LIMIT_LISTS } from "@/constants/chart.constants";
 
 const SelectedCharts = () => {
-  const [dateRange, setDateRange] = useState<RangeValue<DateValue> | null>(
-    null,
-  );
-  const [limit, setLimit] = useState(30);
+  const {
+    getColorPallete,
+    dateRange,
+    dataSelectedCharts,
+    setDateRange,
+    limit,
+    setLimit,
+    handleSubmit,
+    handleChangeChartLimit,
+  } = useSelectedCharts();
 
-  let formatter = useDateFormatter({ dateStyle: "short" });
-
-  const temperatureCharts = useSelectedCharts("temperature");
   return (
     <>
       <PageTitle title="Selected Charts" />
-      <form>
-        <DateRangePicker
-          className="max-w-72"
-          value={dateRange}
-          onChange={setDateRange}
-        />
-        <Select
-          className="hidden max-w-36 lg:block"
-          classNames={{
-            label: "dark:text-white",
-            trigger: "dark:bg-primary-900 ",
-            popoverContent: "dark:bg-primary-900",
-          }}
-          size="md"
-          selectedKeys={[String(limit)]}
-          selectionMode="single"
-          // onChange={}
-          startContent={<p className="text-small">Show:</p>}
-          disallowEmptySelection
-        >
-          {CHART_LIMIT_LISTS.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.label}
-            </SelectItem>
-          ))}
-        </Select>
-        <p>StartDate: {dateRange?.start.toString()}</p>
-        <p>EndDate: {dateRange?.end.toString()}</p>
-        <Button type="submit">Submit</Button>
+      <form onSubmit={handleSubmit} method="GET">
+        <div className="mb-4 flex flex-col justify-center gap-4 md:flex-row lg:justify-start">
+          <DateRangePicker
+            aria-label="Date Range Picker"
+            className="max-w-72"
+            classNames={{
+              input: "text-black dark:text-white",
+              inputWrapper: "dark:bg-gray-500/30",
+              selectorIcon: "dark:text-white",
+            }}
+            value={dateRange}
+            onChange={setDateRange}
+          />
+          <Select
+            aria-label="Select Limit"
+            className="hidden max-w-36 lg:block"
+            classNames={{
+              label: "dark:text-white",
+              trigger: "dark:bg-primary-900 ",
+              popoverContent: "dark:bg-primary-900",
+            }}
+            size="md"
+            selectionMode="single"
+            selectedKeys={[String(limit)]}
+            startContent={<p className="text-small">Show:</p>}
+            onChange={handleChangeChartLimit}
+            disallowEmptySelection
+          >
+            {CHART_LIMIT_LISTS.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </Select>
+          <Button
+            className="max-w-1 bg-teal-500 text-white dark:bg-primary-600"
+            variant="solid"
+            type="submit"
+          >
+            Submit
+          </Button>
+        </div>
+
+        {dataSelectedCharts && (
+          <div>
+            <ChartCard
+              title="Temperature"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("temperature")}
+              currentSensor="temperature"
+              dateRange={dateRange}
+            />
+            <ChartCard
+              title="Acidity"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("pH")}
+              currentSensor="pH"
+              dateRange={dateRange}
+            />
+            <ChartCard
+              title="Conductivity"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("conductivity")}
+              currentSensor="conductivity"
+              dateRange={dateRange}
+            />
+            <ChartCard
+              title="Dissolved Oxygen"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("oxygen")}
+              currentSensor="oxygen"
+              dateRange={dateRange}
+            />
+            <ChartCard
+              title="Dissolved Solid"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("ppm")}
+              currentSensor="ppm"
+              dateRange={dateRange}
+            />
+            <ChartCard
+              title="PM2.5 (Air Pollution)"
+              latestChart={dataSelectedCharts}
+              colorPallete={getColorPallete("pm25")}
+              currentSensor="pm25"
+              dateRange={dateRange}
+            />
+          </div>
+        )}
       </form>
-      {/* <ChartCard title="Temperature" colorPallete={} currentSensor="temperature"  /> */}
     </>
   );
 };

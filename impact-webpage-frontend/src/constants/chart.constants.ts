@@ -2,6 +2,8 @@ const CHART_LIMIT_LISTS = [
   { label: "30", value: 30 },
   { label: "40", value: 40 },
   { label: "50", value: 50 },
+  { label: "75", value: 75 },
+  { label: "100", value: 100 },
 ];
 
 const LIMIT_DEFAULT = CHART_LIMIT_LISTS[0].value;

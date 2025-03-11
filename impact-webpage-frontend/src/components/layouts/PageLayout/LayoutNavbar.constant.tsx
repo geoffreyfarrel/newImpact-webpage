@@ -1,5 +1,6 @@
 import { BsTable } from "react-icons/bs";
 import { FaChartArea, FaIdCard } from "react-icons/fa";
+import { ImLab } from "react-icons/im";
 import { GrDocumentTime } from "react-icons/gr";
 import { IoHome } from "react-icons/io5";
 import { PiChartLineUp } from "react-icons/pi";
@@ -28,6 +29,12 @@ const LAYOUTNAVBAR_ITEMS = [
     label: "Charts",
     href: "/charts",
     icon: <FaChartArea />,
+  },
+  {
+    key: "analysis",
+    label: "Analysis",
+    href: "/analysis",
+    icon: <ImLab />,
   },
   {
     key: "prediction",

@@ -3,7 +3,8 @@ import endpoint from "./endpoint.constant";
 
 const chartServices = {
   getSelectedChart: (params?: string) =>
-    instance.post(`${endpoint.CHART}?${params}`),
+    instance.get(`${endpoint.CHART}?${params}`),
+  getBoxPlotChart: () => instance.get(endpoint.BOX_PLOT),
 };
 
 export default chartServices;

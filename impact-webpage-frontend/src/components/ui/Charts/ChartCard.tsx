@@ -3,11 +3,13 @@ import {
   Card,
   CardBody,
   CardHeader,
+  DateValue,
   Divider,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  RangeValue,
   Skeleton,
 } from "@heroui/react";
 import { Line } from "react-chartjs-2";
@@ -33,12 +35,21 @@ import { CiMenuKebab } from "react-icons/ci";
 import { SENSOR_LABEL } from "./ChartCard.constant";
 import { ISensorData } from "@/types/Sensor";
 
+interface DropdownOption {
+  key: string;
+  label: string;
+}
+
 interface PropTypes {
   title: string;
   colorPallete: string[];
   latestChart: { data: ISensorData[] } | null;
   currentSensor: string;
-  setCurrentSensor: (sensor: string) => void;
+  setCurrentSensor?: (sensor: string) => void;
+  showDropdown?: boolean; // Dropdown visibility control
+  dropdownOptions?: DropdownOption[]; // Custom dropdown items
+  showDateRange?: boolean; // Date range visibility control
+  dateRange: RangeValue<DateValue> | null;
 }
 
 ChartJS.register(
@@ -51,13 +62,24 @@ ChartJS.register(
   Legend,
 );
 
-const ChartCard = (props: PropTypes) => {
+const ChartCard = ({
+  title,
+  colorPallete,
+  latestChart,
+  currentSensor,
+  setCurrentSensor,
+  showDropdown = false,
+  dropdownOptions = [],
+  dateRange,
+  showDateRange = false,
+}: PropTypes) => {
   const { theme } = useTheme();
-  const { colorPallete, currentSensor, latestChart, setCurrentSensor, title } =
-    props;
 
   let labels = latestChart?.data.map((item) => {
     const date = new Date(item.createdAt);
+    if (!showDateRange) {
+      return formatISOTimeWithDate(convertToTaiwanTime(date));
+    }
     return formatOnlyTime(formatISOTimeWithDate(convertToTaiwanTime(date)));
   });
 
@@ -82,6 +104,7 @@ const ChartCard = (props: PropTypes) => {
       },
     ],
   };
+
   const options: ChartOptions<"line"> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -148,50 +171,34 @@ const ChartCard = (props: PropTypes) => {
         ),
       )
     : "End";
-
   return (
     <Card className="mb-4 px-4 dark:bg-primary-800">
-      <CardHeader className="flex justify-between">
+      <CardHeader className="flex items-center justify-between">
         <div>{title}</div>
-        <div className="font-semibold">
-          {dateStart} - {dateEnd}
-        </div>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button className="hover:!bg-transparent" variant="light">
-              <CiMenuKebab className="text-xl" />
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            <DropdownItem
-              key="temperature"
-              onPress={() => setCurrentSensor("temperature")}
-            >
-              Temperature
-            </DropdownItem>
-            <DropdownItem key="pH" onPress={() => setCurrentSensor("pH")}>
-              Acidity
-            </DropdownItem>
-            <DropdownItem
-              key="conductivity"
-              onPress={() => setCurrentSensor("conductivity")}
-            >
-              Conductivity
-            </DropdownItem>
-            <DropdownItem
-              key="oxygen"
-              onPress={() => setCurrentSensor("oxygen")}
-            >
-              Dissolved Oxygen
-            </DropdownItem>
-            <DropdownItem key="ppm" onPress={() => setCurrentSensor("ppm")}>
-              Dissolved Solid
-            </DropdownItem>
-            <DropdownItem key="pm25" onPress={() => setCurrentSensor("pm25")}>
-              PM2.5 (Air Pollution)
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        {showDateRange && (
+          <div className="font-semibold">
+            {dateStart} - {dateEnd}
+          </div>
+        )}
+        {showDropdown && setCurrentSensor && (
+          <Dropdown classNames={{ content: "dark:bg-primary-900" }}>
+            <DropdownTrigger>
+              <Button className="hover:!bg-transparent" variant="light">
+                <CiMenuKebab className="text-xl" />
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              {dropdownOptions.map((option) => (
+                <DropdownItem
+                  key={option.key}
+                  onPress={() => setCurrentSensor(option.key)}
+                >
+                  {option.label}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+        )}
       </CardHeader>
       <Divider />
       <CardBody className="h-[300px]">

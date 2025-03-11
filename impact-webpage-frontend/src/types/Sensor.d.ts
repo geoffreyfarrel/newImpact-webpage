@@ -19,4 +19,12 @@ interface MappedSensorData {
   pm25: { value: number; color: string; indicator: string };
 }
 
-export { ISensorData, MappedSensorData };
+type SensorKey =
+  | "temperature"
+  | "pH"
+  | "conductivity"
+  | "oxygen"
+  | "ppm"
+  | "pm25";
+
+export { ISensorData, MappedSensorData, SensorKey };

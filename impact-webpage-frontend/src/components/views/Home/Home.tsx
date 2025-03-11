@@ -1,5 +1,4 @@
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
-import Charts from "@/components/ui/Charts";
 import SensorCard from "@/components/ui/SensorCard";
 import {
   convertToTaiwanTime,
@@ -8,6 +7,8 @@ import {
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import { Fragment, useState } from "react";
 import useHome from "./useHome";
+import ChartCard from "@/components/ui/Charts";
+import DROPDOWN_CONSTANTS from "./Home.constants";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,12 +27,15 @@ const Home = () => {
         Sustainability: A Case Study of National Taipei University
       </h1>
       <PageTitle title="Home" />
-      <Charts
+      <ChartCard
         title="Latest Result"
         colorPallete={colorPallete}
         latestChart={latestChart}
         currentSensor={currentSensor}
         setCurrentSensor={setCurrentSensor}
+        showDateRange
+        showDropdown
+        dropdownOptions={DROPDOWN_CONSTANTS}
       />
       <Card className="mb-4 p-2 dark:bg-primary-800">
         <CardHeader>Measured Result</CardHeader>
@@ -82,7 +86,7 @@ const Home = () => {
           </div>
         </CardBody>
       </Card>
-      <Charts
+      <ChartCard
         title="Latest Result"
         colorPallete={colorPallete}
         latestChart={latestChart}

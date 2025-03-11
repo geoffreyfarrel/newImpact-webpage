@@ -52,8 +52,8 @@ const DataTable = (props: PropTypes) => {
 
   const BottomContent = useMemo(() => {
     return (
-      <div className="flex w-full items-center justify-center lg:justify-between">
-        <div className="w-1/2">
+      <div className="flex w-full flex-col items-center justify-center gap-4 text-center lg:flex-row lg:justify-between lg:gap-0">
+        <div className="w-full lg:w-1/2">
           {onChangeLimit && (
             <section>
               <Select
@@ -77,7 +77,7 @@ const DataTable = (props: PropTypes) => {
                   </SelectItem>
                 ))}
               </Select>
-              <p className="text-base">
+              <p className="text-center text-base lg:text-start">
                 Showing: {limit} entries from {total} entries
               </p>
             </section>
