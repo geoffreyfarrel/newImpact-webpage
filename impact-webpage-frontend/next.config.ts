@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   i18n: {
     locales: ["en", "cn"],
     defaultLocale: "en",
+    domains: [
+      { domain: "example.com", defaultLocale: "en", http: true },
+      {
+        domain: "example.cn",
+        defaultLocale: "cn",
+        http: true,
+      },
+    ],
   },
 };
 

@@ -10,8 +10,10 @@ import { Card, CardBody, CardHeader } from "@heroui/react";
 import { Fragment, useState } from "react";
 import useLatestResult from "./useLatestResult";
 import getColumns from "@/constants/column.constants";
+import { useTranslations } from "next-intl";
 
-const LatestResult = () => {
+const LatestResult = ({ messages }: { messages: Record<string, string> }) => {
+  const t = useTranslations();
   const {
     temperatureDataTableData,
     pHDataTableData,
@@ -29,7 +31,7 @@ const LatestResult = () => {
   } = useLatestResult();
   return (
     <Fragment>
-      <PageTitle title="Latest Result" />
+      <PageTitle title={t("latest_result")} />
       <DataTable
         columns={getColumns("temperature")}
         currentPage={page}
@@ -37,9 +39,9 @@ const LatestResult = () => {
         limit={pagination.temperature.limit}
         isLoading={temperatureDataTableData.length === 0 ? true : false}
         sensorType="temperature"
-        sensorDescription="Measured Water Temperature Value (&deg; C)"
+        sensorDescription={t("measured_temperature")}
         onChangePage={(newPage) => handleChangePage("temperature", newPage)}
-        title="Measured Water Temperature Value"
+        title={t("temperature_table_title")}
         totalPages={totalPages}
       />
       <DataTable
@@ -49,9 +51,9 @@ const LatestResult = () => {
         limit={pagination.pH.limit}
         isLoading={pHDataTableData.length === 0 ? true : false}
         sensorType="pH"
-        sensorDescription="Measured Acidity (pH)"
+        sensorDescription={t("measured_acidity")}
         onChangePage={(newPage) => handleChangePage("pH", newPage)}
-        title="Measured Water Acidity Value"
+        title={t("acidity_table_title")}
         totalPages={totalPages}
       />
       <DataTable
@@ -61,9 +63,9 @@ const LatestResult = () => {
         limit={pagination.conductivity.limit}
         isLoading={conductivityDataTableData.length === 0 ? true : false}
         sensorType="conductivity"
-        sensorDescription="Measured Water Conductivity (S/m)"
+        sensorDescription={t("measured_conductivity")}
         onChangePage={(newPage) => handleChangePage("conductivity", newPage)}
-        title="Measured Water Conductivity Value"
+        title={t("conductivity_table_title")}
         totalPages={totalPages}
       />
       <DataTable
@@ -73,9 +75,9 @@ const LatestResult = () => {
         limit={pagination.oxygen.limit}
         isLoading={oxygenDataTableData.length === 0 ? true : false}
         sensorType="oxygen"
-        sensorDescription="Measured Water Dissolved Oxygen (mg/L)"
+        sensorDescription={t("measured_oxygen")}
         onChangePage={(newPage) => handleChangePage("oxygen", newPage)}
-        title="Measured Water Dissolved Oxygen Value"
+        title={t("oxygen_table_title")}
         totalPages={totalPages}
       />
       <DataTable
@@ -85,9 +87,9 @@ const LatestResult = () => {
         limit={pagination.ppm.limit}
         isLoading={ppmDataTableData.length === 0 ? true : false}
         sensorType="ppm"
-        sensorDescription="Measured Water Dissolved Solid (ppm)"
+        sensorDescription={t("measured_ppm")}
         onChangePage={(newPage) => handleChangePage("ppm", newPage)}
-        title="Measured Water Dissolved Solid Value"
+        title={t("ppm_table_title")}
         totalPages={totalPages}
       />
       <DataTable
@@ -97,9 +99,9 @@ const LatestResult = () => {
         limit={pagination.pm25.limit}
         isLoading={pm25DataTableData.length === 0 ? true : false}
         sensorType="pm25"
-        sensorDescription="Measured PM2.5 (Air Pollution) (&mu;g/m&sup3;)"
+        sensorDescription={t("measured_pm25")}
         onChangePage={(newPage) => handleChangePage("pm25", newPage)}
-        title="Measured PM2.5 (Air Pollution) Value"
+        title={t("pm25_table_title")}
         totalPages={totalPages}
       />
     </Fragment>

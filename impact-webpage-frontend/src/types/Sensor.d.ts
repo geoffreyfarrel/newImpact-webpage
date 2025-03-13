@@ -12,11 +12,11 @@ interface ISensorData {
 interface MappedSensorData {
   createdAt: { value: string; color?: string; indicator?: string };
   temperature: { value: number; color?: string; indicator?: string };
-  pH: { value: number; color: string; indicator: string };
-  oxygen: { value: number; color: string; indicator: string };
+  pH: { value: number; color: string; indicator?: string };
+  oxygen: { value: number; color: string; indicator?: string };
   conductivity: { value: number; color?: string; indicator?: string };
-  ppm: { value: number; color: string; indicator: string };
-  pm25: { value: number; color: string; indicator: string };
+  ppm: { value: number; color: string; indicator?: string };
+  pm25: { value: number; color: string; indicator?: string };
 }
 
 type SensorKey =

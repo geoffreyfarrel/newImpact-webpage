@@ -1,10 +1,11 @@
 import BoxPlotChart from "@/components/ui/BoxPlotChart";
 import { Card, CardHeader } from "@heroui/react";
 import useAnalysis from "./useAnalysis";
+import { useTranslations } from "next-intl";
 
-const Analysis = () => {
+const Analysis = ({ messages }: { messages: Record<string, string> }) => {
+  const t = useTranslations();
   const { boxplotData, isLoadingBoxplot, isRefetchingBoxplot } = useAnalysis();
-  //   console.log(boxplotData);
   return (
     <>
       <BoxPlotChart
@@ -12,48 +13,48 @@ const Analysis = () => {
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="temperature"
-        title="Monthly Temperature BoxPlot Chart"
-        label="Water Temperature"
+        title={t("temperature_boxplot")}
+        label={t("temperature")}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="pH"
-        title="Monthly Acidity BoxPlot Chart"
-        label="Acidity"
+        title={t("acidity_boxplot")}
+        label={t("pH")}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="conductivity"
-        title="Monthly Conductivity BoxPlot Chart"
-        label="Conductivity"
+        title={t("conductivity_boxplot")}
+        label={t("conductivity")}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="oxygen"
-        title="Monthly Dissolved Oxygen BoxPlot Chart"
-        label="Dissolved Oxygen"
+        title={t("oxygen_boxplot")}
+        label={t("oxygen")}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="ppm"
-        title="Monthly Dissolved Solid BoxPlot Chart"
-        label="Dissolved Solid"
+        title={t("ppm_boxplot")}
+        label={t("ppm")}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
         isLoading={isLoadingBoxplot}
         isRefetching={isRefetchingBoxplot}
         sensorType="pm25"
-        title="Monthly PM2.5 (Air Pollution) BoxPlot Chart"
-        label="PM2.5 (Air Pollution)"
+        title={t("pm25_boxplot")}
+        label={t("pm25")}
       />
     </>
   );

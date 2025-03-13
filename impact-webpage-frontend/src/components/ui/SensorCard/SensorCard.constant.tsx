@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 const COLOR_PALETTE_SENSOR_CARD: Record<
   "pH" | "oxygen" | "ppm" | "pm25" | "default",
   (data: number) => string
@@ -62,74 +64,45 @@ const COLOR_PALETTE_SENSOR_CARD: Record<
   default: (data: number) => "rgba(20, 184, 166, 1)",
 };
 
-const INDICATOR_TEXT: Record<
-  "pH" | "oxygen" | "ppm" | "pm25",
-  (data: number) => string
-> = {
-  pH: (data: number) => {
-    if (data >= 0 && data < 3) {
-      return "Highly Acidic";
-    } else if (data >= 3 && data < 7) {
-      return "Slightly Acidic";
-    } else if (data >= 7 && data < 8) {
-      return "Neutral";
-    } else if (data >= 8 && data < 13) {
-      return "Slightly Alkaline";
-    } else if (data >= 13) {
-      return "Highly Alkaline";
-    } else {
-      return "No Data";
-    }
-  },
-  oxygen: (data: number) => {
-    if (data >= 0 && data < 4.1) {
-      return "No live";
-    } else if (data >= 4.1 && data < 6.6) {
-      return "Few live";
-    } else if (data >= 6.6 && data < 9.6) {
-      return "Most live";
-    } else if (data >= 9.6) {
-      return "All live";
-    } else {
-      return "No Data";
-    }
-  },
-  ppm: (data: number) => {
-    if (data >= 0 && data < 50) {
-      return "Ideal drinking water";
-    } else if (data >= 50 && data < 100) {
-      return "Good quality water";
-    } else if (data >= 100 && data < 200) {
-      return "Hard water";
-    } else if (data >= 200 && data < 300) {
-      return "Marginally acceptable";
-    } else if (data >= 300 && data < 400) {
-      return "High TDS water";
-    } else if (data >= 400 && data < 500) {
-      return "Poor quality";
-    } else if (data >= 500) {
-      return "Undrinkable";
-    } else {
-      return "No Data";
-    }
-  },
-  pm25: (data: number) => {
-    if (data >= 0 && data < 9.1) {
-      return "Good";
-    } else if (data >= 9.1 && data < 35.5) {
-      return "Moderate";
-    } else if (data >= 35.5 && data < 55.5) {
-      return "Unhealthy for several groups";
-    } else if (data >= 55.5 && data < 125.5) {
-      return "Unhealthy";
-    } else if (data >= 125.5 && data < 225.5) {
-      return "Very unhealthy";
-    } else if (data >= 225.5) {
-      return "Hazardous";
-    } else {
-      return "No Data";
-    }
-  },
+const useIndicatorText = () => {
+  const t = useTranslations(); // Use "indicators" namespace
+
+  return {
+    pH: (data: number) => {
+      if (data >= 0 && data < 3) return t("highly_acidic");
+      else if (data >= 3 && data < 7) return t("slightly_acidic");
+      else if (data >= 7 && data < 8) return t("neutral");
+      else if (data >= 8 && data < 13) return t("slightly_alkaline");
+      else if (data >= 13) return t("highly_alkaline");
+      else return t("no_data");
+    },
+    oxygen: (data: number) => {
+      if (data >= 0 && data < 4.1) return t("no_live");
+      else if (data >= 4.1 && data < 6.6) return t("few_live");
+      else if (data >= 6.6 && data < 9.6) return t("most_live");
+      else if (data >= 9.6) return t("all_live");
+      else return t("no_data");
+    },
+    ppm: (data: number) => {
+      if (data >= 0 && data < 50) return t("ideal_ppm");
+      else if (data >= 50 && data < 100) return t("good_ppm");
+      else if (data >= 100 && data < 200) return t("hard_ppm");
+      else if (data >= 200 && data < 300) return t("marginally_ppm");
+      else if (data >= 300 && data < 400) return t("high_ppm");
+      else if (data >= 400 && data < 500) return t("poor_ppm");
+      else if (data >= 500) return t("undrinkable_ppm");
+      else return t("no_data");
+    },
+    pm25: (data: number) => {
+      if (data >= 0 && data < 9.1) return t("good");
+      else if (data >= 9.1 && data < 35.5) return t("moderate_pm25");
+      else if (data >= 35.5 && data < 55.5) return t("unhealthy_several_pm25");
+      else if (data >= 55.5 && data < 125.5) return t("unhealthy_pm25");
+      else if (data >= 125.5 && data < 225.5) return t("very_unhealthy_pm25");
+      else if (data >= 225.5) return t("hazardous_pm25");
+      else return t("no_data");
+    },
+  };
 };
 
-export { COLOR_PALETTE_SENSOR_CARD, INDICATOR_TEXT };
+export { COLOR_PALETTE_SENSOR_CARD, useIndicatorText };

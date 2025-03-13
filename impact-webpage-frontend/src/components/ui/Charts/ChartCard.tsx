@@ -49,7 +49,7 @@ interface PropTypes {
   showDropdown?: boolean; // Dropdown visibility control
   dropdownOptions?: DropdownOption[]; // Custom dropdown items
   showDateRange?: boolean; // Date range visibility control
-  dateRange: RangeValue<DateValue> | null;
+  dateRange?: RangeValue<DateValue> | null;
 }
 
 ChartJS.register(

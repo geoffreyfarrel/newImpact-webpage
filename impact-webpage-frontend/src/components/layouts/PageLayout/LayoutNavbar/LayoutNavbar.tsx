@@ -1,20 +1,23 @@
 import { INavbarItems } from "@/types/Dashboard";
 import { cn } from "@/utils/cn";
 import { Button, Listbox, ListboxItem } from "@heroui/react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Dispatch, JSX, SetStateAction, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useLayoutNavbarItems } from "../LayoutNavbar.constant";
 
 interface PropTypes {
   isOpen: boolean;
-  navbarItems: INavbarItems[];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const LayoutNavbar = (props: PropTypes) => {
-  const { isOpen, navbarItems, setIsOpen } = props;
+  const navbarItems = useLayoutNavbarItems();
+  const t = useTranslations();
+  const { isOpen, setIsOpen } = props;
   const router = useRouter();
 
   return (
@@ -81,8 +84,8 @@ const LayoutNavbar = (props: PropTypes) => {
             >
               <p
                 className={cn("transition-all", {
-                  "text-small": isOpen,
-                  "truncate text-xs": !isOpen, // Truncate text for small width
+                  "text-base": isOpen,
+                  "truncate text-sm": !isOpen, // Truncate text for small width
                 })}
               >
                 {item.label}

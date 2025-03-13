@@ -11,7 +11,28 @@ const ThemeSwitcher = () => {
   // Ensure the component is mounted before rendering (prevents SSR mismatches)
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    const checkTimeAndUpdateTheme = () => {
+      const hour = new Date().getHours();
+      // console.log("Checking time:", hour);
+
+      if (hour >= 18 || hour < 6) {
+        setTheme("dark");
+      } else {
+        setTheme("light");
+      }
+    };
+
+    // Run immediately
+    checkTimeAndUpdateTheme();
+
+    // Auto-check every minute
+    const interval = setInterval(() => {
+      checkTimeAndUpdateTheme();
+    }, 1000); // Check every 60 seconds
+
+    return () => clearInterval(interval); // Cleanup when component unmounts
+  }, [setTheme]);
 
   if (!mounted) return null; // Avoid rendering until mounted
 

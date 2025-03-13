@@ -1,4 +1,5 @@
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
+import { LanguageContext } from "@/contexts/LanguageProvider";
 import {
   Avatar,
   Button,
@@ -8,18 +9,45 @@ import {
   DropdownTrigger,
 } from "@heroui/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { MdSunny } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 interface PropTypes {
   navbarIsOpen: boolean;
-  setNavBarIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setNavBarIsOpen: Dispatch<SetStateAction<boolean>>;
 }
+
+const localeFlags: Record<string, string> = {
+  en: "/img/en-flag.png",
+  cn: "/img/cn-flag.png",
+};
+
+const localeNames: Record<string, string> = {
+  en: "English (US)",
+  cn: "中文(繁體)",
+};
 
 const TopBar = (props: PropTypes) => {
   const { navbarIsOpen, setNavBarIsOpen } = props;
+  const languageContext = useContext(LanguageContext);
+  const router = useRouter();
+  const currentLocale = router.locale || "en";
   const [isOpen, setIsOpen] = useState(false);
+
+  if (!languageContext) {
+    return null;
+  }
+
+  const { changeLanguage } = languageContext;
+
   return (
     <div className="w-full border-b-2 bg-teal-500 dark:border-gray-600 dark:bg-background">
       <div className="flex flex-col items-center p-4 lg:flex-row lg:justify-between">
@@ -62,45 +90,40 @@ const TopBar = (props: PropTypes) => {
             onMouseEnter={() => setIsOpen(!isOpen)}
             onMouseLeave={() => setIsOpen(!isOpen)}
           >
-            <Dropdown isOpen={isOpen}>
+            <Dropdown
+              isOpen={isOpen}
+              classNames={{ content: "dark:bg-primary-800" }}
+            >
               <DropdownTrigger>
                 <Button
                   variant="light"
                   className="hover:!bg-transparent"
                   onPressStart={() => setIsOpen(!isOpen)}
                 >
-                  <Avatar src="/img/en-flag.png" />
+                  <Avatar
+                    src={localeFlags[currentLocale]}
+                    alt="current-language-flag"
+                  />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
-                <DropdownItem
-                  key={"en"}
-                  startContent={
-                    <Image
-                      className="h-5 w-10"
-                      alt="en-flag"
-                      src="/img/en-flag.png"
-                      width={100}
-                      height={100}
-                    />
-                  }
-                >
-                  English(US)
-                </DropdownItem>
-                <DropdownItem
-                  key={"cn"}
-                  startContent={
-                    <Image
-                      className="h-5 w-10"
-                      alt="cn-flag"
-                      src="/img/cn-flag.png"
-                      width={100}
-                      height={100}
-                    />
-                  }
-                >
-                  中文(繁體)
-                </DropdownItem>
+                {Object.entries(localeFlags).map(([locale, flag]) => (
+                  <DropdownItem
+                    key={locale}
+                    startContent={
+                      <Image
+                        className="h-5 w-10"
+                        alt={`${locale}-flag`}
+                        src={flag}
+                        width={100}
+                        height={100}
+                      />
+                    }
+                    onClick={() => changeLanguage(locale)}
+                  >
+                    {localeNames[locale]}
+                  </DropdownItem>
+                ))}
               </DropdownMenu>
             </Dropdown>
           </div>

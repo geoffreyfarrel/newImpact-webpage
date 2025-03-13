@@ -1,6 +1,6 @@
 import { cn } from "@heroui/react";
 import { Poppins } from "next/font/google";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface PropTypes {
   children: ReactNode;
@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 const AppShell = (props: PropTypes) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const { children } = props;
+
   return <main className={cn(poppins.className)}>{children}</main>;
 };
 

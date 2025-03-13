@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 const COLOR_PALETTE_CHART: Record<
   "pH" | "oxygen" | "ppm" | "pm25" | "default",
   (data: number[]) => string[]
@@ -57,19 +59,20 @@ const COLOR_PALETTE_CHART: Record<
 };
 
 const SENSOR_LABEL = (sensorType: string) => {
+  const t = useTranslations();
   switch (sensorType) {
     case "temperature":
-      return "Water Temperature";
+      return t("temperature");
     case "pH":
-      return "Acidity";
+      return t("pH");
     case "oxygen":
-      return "Dissolved Oxygen";
+      return t("oxygen");
     case "conductivity":
-      return "Conductivity";
+      return t("conductivity");
     case "ppm":
-      return "Dissolved Solid";
+      return t("ppm");
     case "pm25":
-      return "PM2.5 (Air Pollution)";
+      return t("pm25");
   }
 };
 

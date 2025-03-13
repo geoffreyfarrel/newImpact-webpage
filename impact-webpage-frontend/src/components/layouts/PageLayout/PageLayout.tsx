@@ -2,7 +2,6 @@ import PageHead from "@/components/commons/PageHead";
 import { Fragment, ReactNode, useState } from "react";
 import TopBar from "./TopBar";
 import LayoutNavbar from "./LayoutNavbar";
-import { LAYOUTNAVBAR_ITEMS } from "./LayoutNavbar.constant";
 import { Button, NavbarMenuToggle } from "@heroui/react";
 import { FaHamburger } from "react-icons/fa";
 import LayoutNavbarMobile from "./LayoutNavbarMobile";
@@ -20,14 +19,9 @@ const PageLayout = (props: PropTypes) => {
     <Fragment>
       <PageHead title={title} />
       <div className="max-w-screen-3xl 3xl:container flex flex-row">
-        <LayoutNavbar
-          navbarItems={LAYOUTNAVBAR_ITEMS}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
+        <LayoutNavbar isOpen={isOpen} setIsOpen={setIsOpen} />
         <div className="flex min-h-screen w-full flex-grow flex-col overflow-y-auto">
           <LayoutNavbarMobile
-            navbarItems={LAYOUTNAVBAR_ITEMS}
             navbarIsOpen={isOpen}
             setNavbarIsOpen={setIsOpen}
           />

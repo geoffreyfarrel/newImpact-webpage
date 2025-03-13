@@ -3,8 +3,10 @@ import useSelectedCharts from "./useSelectedCharts";
 import { Button, DateRangePicker, Select, SelectItem } from "@heroui/react";
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import { CHART_LIMIT_LISTS } from "@/constants/chart.constants";
+import { useTranslations } from "next-intl";
 
-const SelectedCharts = () => {
+const SelectedCharts = ({ messages }: { messages: Record<string, string> }) => {
+  const t = useTranslations();
   const {
     getColorPallete,
     dateRange,
@@ -18,7 +20,7 @@ const SelectedCharts = () => {
 
   return (
     <>
-      <PageTitle title="Selected Charts" />
+      <PageTitle title={t("charts")} />
       <form onSubmit={handleSubmit} method="GET">
         <div className="mb-4 flex flex-col justify-center gap-4 md:flex-row lg:justify-start">
           <DateRangePicker
@@ -58,49 +60,49 @@ const SelectedCharts = () => {
             variant="solid"
             type="submit"
           >
-            Submit
+            {t("submit")}
           </Button>
         </div>
 
         {dataSelectedCharts && (
           <div>
             <ChartCard
-              title="Temperature"
+              title={t("temperature")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("temperature")}
               currentSensor="temperature"
               dateRange={dateRange}
             />
             <ChartCard
-              title="Acidity"
+              title={t("pH")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("pH")}
               currentSensor="pH"
               dateRange={dateRange}
             />
             <ChartCard
-              title="Conductivity"
+              title={t("conductivity")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("conductivity")}
               currentSensor="conductivity"
               dateRange={dateRange}
             />
             <ChartCard
-              title="Dissolved Oxygen"
+              title={t("oxygen")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("oxygen")}
               currentSensor="oxygen"
               dateRange={dateRange}
             />
             <ChartCard
-              title="Dissolved Solid"
+              title={t("ppm")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("ppm")}
               currentSensor="ppm"
               dateRange={dateRange}
             />
             <ChartCard
-              title="PM2.5 (Air Pollution)"
+              title={t("pm25")}
               latestChart={dataSelectedCharts}
               colorPallete={getColorPallete("pm25")}
               currentSensor="pm25"

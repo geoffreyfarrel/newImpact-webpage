@@ -17,6 +17,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 import { ISensorData } from "@/types/Sensor";
 import { LIMIT_LISTS } from "@/constants/list.constants";
+import { useTranslations } from "next-intl";
 
 interface PropTypes {
   columns: { key: string; label: string }[];
@@ -34,6 +35,7 @@ interface PropTypes {
 }
 
 const DataTable = (props: PropTypes) => {
+  const t = useTranslations();
   const {
     columns,
     currentPage,
@@ -124,7 +126,7 @@ const DataTable = (props: PropTypes) => {
       >
         <TableHeader>
           <TableColumn className="w-1/2 min-w-0 whitespace-normal break-words text-center text-sm dark:bg-primary-400/25 dark:text-white">
-            Measurement Time (UTC+8)
+            {t("time")}
           </TableColumn>
           <TableColumn className="w-1/2 min-w-0 whitespace-normal break-words text-center text-sm dark:bg-primary-400/25 dark:text-white">
             {sensorDescription}

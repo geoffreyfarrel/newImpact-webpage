@@ -7,8 +7,10 @@ import useAllResult from "./useAllResult";
 import { useRouter } from "next/router";
 import { Button, DateRangePicker, DateValue, RangeValue } from "@heroui/react";
 import { SENSORS } from "./AllResult.constanst";
+import { useTranslations } from "next-intl";
 
-const AllResult = () => {
+const AllResult = ({ messages }: { messages: Record<string, string> }) => {
+  const t = useTranslations();
   const { push, isReady, query } = useRouter();
   const {
     pagination,
@@ -21,7 +23,7 @@ const AllResult = () => {
 
   return (
     <Fragment>
-      <PageTitle title="All Result" />
+      <PageTitle title={t("all_result")} />
 
       {SENSORS.map(({ key, title, description }) => (
         <div key={key} className="mb-8 border-b border-gray-300 p-4">
@@ -40,7 +42,7 @@ const AllResult = () => {
                 variant="bordered"
                 onPress={() => handleChangeDateRange(key, null)}
               >
-                Clear
+                {t("clear")}
               </Button>
             )}
           </div>

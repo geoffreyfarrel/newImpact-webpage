@@ -9,8 +9,10 @@ import { Fragment, useState } from "react";
 import useHome from "./useHome";
 import ChartCard from "@/components/ui/Charts";
 import DROPDOWN_CONSTANTS from "./Home.constants";
+import { useTranslations } from "next-intl";
 
-const Home = () => {
+const Home = ({ messages }: { messages: Record<string, string> }) => {
+  const t = useTranslations();
   const [isLoading, setIsLoading] = useState(false);
   const {
     colorPallete,
@@ -22,13 +24,15 @@ const Home = () => {
 
   return (
     <Fragment>
-      <h1 className="m-4 text-center text-lg font-semibold md:text-2xl lg:text-3xl">
-        Integrated Monitoring, Analysis, and Prediction of Environmental
-        Sustainability: A Case Study of National Taipei University
+      <h1
+        // style={{ whiteSpace: "pre-line" }}
+        className="m-4 whitespace-pre-line text-center text-lg font-semibold md:text-2xl lg:text-3xl"
+      >
+        {t("project_title")}
       </h1>
-      <PageTitle title="Home" />
+      <PageTitle title={t("home")} />
       <ChartCard
-        title="Latest Result"
+        title={t("chart_title")}
         colorPallete={colorPallete}
         latestChart={latestChart}
         currentSensor={currentSensor}
@@ -38,105 +42,105 @@ const Home = () => {
         dropdownOptions={DROPDOWN_CONSTANTS}
       />
       <Card className="mb-4 p-2 dark:bg-primary-800">
-        <CardHeader>Measured Result</CardHeader>
+        <CardHeader>{t("measured_result")}</CardHeader>
         <CardBody>
           <div>
             <SensorCard
               isTimeCard
               latestSensor={latestSensor}
-              sensorName="Time"
+              sensorName={t("time")}
               sensorType="createdAt"
             />
           </div>
           <div className="grid grid-cols-1 gap-x-4 gap-y-1 md:grid-cols-2 lg:grid-cols-3">
             <SensorCard
               latestSensor={latestSensor}
-              sensorName="Temperature"
+              sensorName={t("temperature")}
               sensorType="temperature"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="pH"
+              sensorName={t("pH")}
               sensorType="pH"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="Dissolved Oxygen"
+              sensorName={t("oxygen")}
               sensorType="oxygen"
             />
             <SensorCard
               latestSensor={latestSensor}
-              sensorName="Conductivity"
+              sensorName={t("conductivity")}
               sensorType="conductivity"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="Dissolved Solid"
+              sensorName={t("ppm")}
               sensorType="ppm"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="PM2.5"
+              sensorName={t("pm25")}
               sensorType="pm25"
             />
           </div>
         </CardBody>
       </Card>
       <ChartCard
-        title="Latest Result"
+        title={t("predicted_chart")}
         colorPallete={colorPallete}
         latestChart={latestChart}
         currentSensor={currentSensor}
         setCurrentSensor={setCurrentSensor}
       />
       <Card className="mb-4 p-2 dark:bg-primary-800">
-        <CardHeader>Predicted Result</CardHeader>
+        <CardHeader>{t("predicted_result")}</CardHeader>
         <CardBody>
           <div>
             <SensorCard
               isTimeCard
               latestSensor={latestSensor}
-              sensorName="Time"
+              sensorName={t("time")}
               sensorType="createdAt"
             />
           </div>
           <div className="grid grid-cols-1 gap-x-4 gap-y-1 md:grid-cols-2 lg:grid-cols-3">
             <SensorCard
               latestSensor={latestSensor}
-              sensorName="Temperature"
+              sensorName={t("temperature")}
               sensorType="temperature"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="pH"
+              sensorName={t("pH")}
               sensorType="pH"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="Dissolved Oxygen"
+              sensorName={t("oxygen")}
               sensorType="oxygen"
             />
             <SensorCard
               latestSensor={latestSensor}
-              sensorName="Conductivity"
+              sensorName={t("conductivity")}
               sensorType="conductivity"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="Dissolved Solid"
+              sensorName={t("ppm")}
               sensorType="ppm"
             />
             <SensorCard
               isIndicator
               latestSensor={latestSensor}
-              sensorName="PM2.5"
+              sensorName={t("pm25")}
               sensorType="pm25"
             />
           </div>

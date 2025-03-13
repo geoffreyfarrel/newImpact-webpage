@@ -1,6 +1,7 @@
 import { cn } from "@/utils/cn";
 import { Badge, Card, CardBody, Skeleton } from "@heroui/react";
 import { ISensorData, MappedSensorData } from "@/types/Sensor";
+import { useIndicatorText } from "./SensorCard.constant";
 
 interface PropTypes {
   isTimeCard?: boolean;
@@ -11,6 +12,7 @@ interface PropTypes {
 }
 
 const SensorCard = (props: PropTypes) => {
+  const indicatorText = useIndicatorText();
   const { isIndicator, isTimeCard, latestSensor, sensorName, sensorType } =
     props;
 
@@ -66,10 +68,12 @@ const SensorCard = (props: PropTypes) => {
             {isIndicator && (
               <div className="flex flex-col items-end gap-1 text-right">
                 <h4 className="text-sm md:text-base lg:text-xl">
-                  {
-                    latestSensor?.[sensorType as keyof MappedSensorData]
-                      .indicator
-                  }
+                  {indicatorText[sensorType as keyof typeof indicatorText](
+                    Number(
+                      latestSensor?.[sensorType as keyof MappedSensorData]
+                        .value,
+                    ), // ✅ Convert value to number
+                  )}
                 </h4>
                 <div
                   className="h-10 w-10 rounded-full"

@@ -6,10 +6,7 @@ import {
   convertToTaiwanTime,
   formatISOTimeWithDate,
 } from "@/utils/timeFormatter";
-import {
-  COLOR_PALETTE_SENSOR_CARD,
-  INDICATOR_TEXT,
-} from "@/components/ui/SensorCard/SensorCard.constant";
+import { COLOR_PALETTE_SENSOR_CARD } from "@/components/ui/SensorCard/SensorCard.constant";
 
 interface WebSocketContextType {
   socket: Socket | null;
@@ -54,28 +51,22 @@ export const WebSocketProvider = ({
     };
 
     const handleNewSensorData = (sensorData: { data: ISensorData }) => {
-      //   console.log("🛑 Received WebSocket Data (Sensor):", sensorData);
-
       const mappedData: MappedSensorData = {
         pH: {
           value: sensorData?.data?.pH,
           color: COLOR_PALETTE_SENSOR_CARD.pH(sensorData?.data?.pH),
-          indicator: INDICATOR_TEXT.pH(sensorData?.data.pH),
         },
         oxygen: {
           value: sensorData?.data.oxygen,
           color: COLOR_PALETTE_SENSOR_CARD.oxygen(sensorData?.data.oxygen),
-          indicator: INDICATOR_TEXT.oxygen(sensorData?.data.oxygen),
         },
         ppm: {
           value: sensorData.data.ppm,
-          color: COLOR_PALETTE_SENSOR_CARD.ppm(sensorData?.data.ppm),
-          indicator: INDICATOR_TEXT.ppm(sensorData.data.ppm),
+          color: COLOR_PALETTE_SENSOR_CARD.ppm(sensorData.data.ppm),
         },
         pm25: {
           value: sensorData.data.pm25,
           color: COLOR_PALETTE_SENSOR_CARD.pm25(sensorData.data.pm25),
-          indicator: INDICATOR_TEXT.pm25(sensorData.data.pm25),
         },
         createdAt: {
           value: formatISOTimeWithDate(

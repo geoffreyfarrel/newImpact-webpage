@@ -6,15 +6,16 @@ import { useRouter } from "next/router";
 import { Dispatch } from "react";
 import { BiCross } from "react-icons/bi";
 import { RxCross1, RxCross2 } from "react-icons/rx";
+import { useLayoutNavbarItems } from "../LayoutNavbar.constant";
 
 interface PropType {
-  navbarItems: INavbarItems[];
   navbarIsOpen: boolean;
   setNavbarIsOpen: Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LayoutNavbarMobile = (props: PropType) => {
-  const { navbarItems, navbarIsOpen, setNavbarIsOpen } = props;
+  const navbarItems = useLayoutNavbarItems();
+  const { navbarIsOpen, setNavbarIsOpen } = props;
   const router = useRouter();
   return (
     <div
