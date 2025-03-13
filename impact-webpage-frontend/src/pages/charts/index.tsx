@@ -1,5 +1,4 @@
 import PageLayout from "@/components/layouts/PageLayout";
-import ChartCard from "@/components/ui/Charts";
 import SelectedCharts from "@/components/views/SelectedCharts";
 import { getMessages } from "@/utils/getMessages";
 

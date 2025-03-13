@@ -1,6 +1,6 @@
 import { cn } from "@heroui/react";
 import { Poppins } from "next/font/google";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 
 interface PropTypes {
   children: ReactNode;

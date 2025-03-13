@@ -1,19 +1,15 @@
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import SensorCard from "@/components/ui/SensorCard";
-import {
-  convertToTaiwanTime,
-  formatISOTimeWithDate,
-} from "@/utils/timeFormatter";
 import { Card, CardBody, CardHeader } from "@heroui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import useHome from "./useHome";
 import ChartCard from "@/components/ui/Charts";
 import DROPDOWN_CONSTANTS from "./Home.constants";
 import { useTranslations } from "next-intl";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Home = ({ messages }: { messages: Record<string, string> }) => {
   const t = useTranslations();
-  const [isLoading, setIsLoading] = useState(false);
   const {
     colorPallete,
     latestChart,

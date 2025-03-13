@@ -1,6 +1,5 @@
 import {
   Divider,
-  getKeyValue,
   Pagination,
   Select,
   SelectItem,
@@ -12,8 +11,11 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import { formatISOTimeWithDate } from "@/utils/timeFormatter";
-import { ChangeEvent, useMemo, useState } from "react";
+import {
+  convertToTaiwanTime,
+  formatISOTimeWithDate,
+} from "@/utils/timeFormatter";
+import { ChangeEvent, useMemo } from "react";
 import { useTheme } from "next-themes";
 import { ISensorData } from "@/types/Sensor";
 import { LIMIT_LISTS } from "@/constants/list.constants";
@@ -37,7 +39,6 @@ interface PropTypes {
 const DataTable = (props: PropTypes) => {
   const t = useTranslations();
   const {
-    columns,
     currentPage,
     data,
     isLoading,
@@ -79,9 +80,11 @@ const DataTable = (props: PropTypes) => {
                   </SelectItem>
                 ))}
               </Select>
-              <p className="text-center text-base lg:text-start">
-                Showing: {limit} entries from {total} entries
-              </p>
+              {total && (
+                <p className="text-center text-base lg:text-start">
+                  Showing: {limit} entries from {total} entries
+                </p>
+              )}
             </section>
           )}
         </div>
@@ -146,7 +149,7 @@ const DataTable = (props: PropTypes) => {
           {(row) => (
             <TableRow key={row?._id}>
               <TableCell className="text-center">
-                {formatISOTimeWithDate(row.createdAt)}
+                {formatISOTimeWithDate(convertToTaiwanTime(row.createdAt))}
               </TableCell>
               <TableCell className="text-center">{row[sensorType]}</TableCell>
             </TableRow>

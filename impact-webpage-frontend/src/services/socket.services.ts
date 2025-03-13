@@ -25,6 +25,7 @@ const getSocket = (): Socket => {
     // window.socketInstance.on("disconnect", (reason) =>
     //   console.warn("⚠️ WebSocket Disconnected:", reason),
     // );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     window.socketInstance.on("connect_error", (err) => {
       // console.error("❌ WebSocket Connection Error:", err);
       setTimeout(() => window.socketInstance?.connect(), 2000);

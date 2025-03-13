@@ -2,6 +2,7 @@ import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const About = ({ messages }: { messages: Record<string, string> }) => {
   const t = useTranslations();
   return (
@@ -37,6 +38,7 @@ const About = ({ messages }: { messages: Record<string, string> }) => {
             <div className="flex flex-col items-center">
               <h3 className="text-2xl font-semibold">{t("ntpu")}</h3>
               <Image
+                className="bg-white/80"
                 src="/img/ntpu-logo.png"
                 alt="NTPU Logo"
                 width={3000}
@@ -52,6 +54,7 @@ const About = ({ messages }: { messages: Record<string, string> }) => {
             <div className="flex flex-col items-center">
               <h3 className="text-2xl font-semibold">{t("honhui")}</h3>
               <Image
+                className="bg-white/80"
                 src="/img/honhui-logo.png"
                 alt="Honhui Logo"
                 width={3000}

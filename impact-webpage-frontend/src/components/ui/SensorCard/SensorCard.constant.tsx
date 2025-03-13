@@ -60,7 +60,7 @@ const COLOR_PALETTE_SENSOR_CARD: Record<
     else if (data >= 225) return "rgba(204, 0, 0, 1)";
     else return "rgba(0, 0, 0, 1)"; // Default color for invalid values
   },
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   default: (data: number) => "rgba(20, 184, 166, 1)",
 };
 

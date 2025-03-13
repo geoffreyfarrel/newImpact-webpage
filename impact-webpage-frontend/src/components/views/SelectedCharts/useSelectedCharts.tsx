@@ -1,7 +1,7 @@
 import { COLOR_PALETTE_CHART } from "@/components/ui/Charts/ChartCard.constant";
 import chartServices from "@/services/chart.services";
 import { useMutation } from "@tanstack/react-query";
-import { useState, ChangeEvent, FormEvent, useMemo } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { DateValue } from "@internationalized/date";
 import { RangeValue } from "@heroui/react";
 
@@ -16,7 +16,7 @@ const useSelectedCharts = () => {
   const fetchSelectedCharts = async () => {
     if (!dateRange?.start || !dateRange?.end) return null;
 
-    let params = `startDate=${dateRange.start.toString()}&endDate=${dateRange.end.toString()}&limit=${limit}`;
+    const params = `startDate=${dateRange.start.toString()}&endDate=${dateRange.end.toString()}&limit=${limit}`;
     const res = await chartServices.getSelectedChart(params);
     return res.data;
   };

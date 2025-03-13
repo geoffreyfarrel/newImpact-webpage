@@ -1,8 +1,8 @@
 import BoxPlotChart from "@/components/ui/BoxPlotChart";
-import { Card, CardHeader } from "@heroui/react";
 import useAnalysis from "./useAnalysis";
 import { useTranslations } from "next-intl";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Analysis = ({ messages }: { messages: Record<string, string> }) => {
   const t = useTranslations();
   const { boxplotData, isLoadingBoxplot, isRefetchingBoxplot } = useAnalysis();
@@ -14,7 +14,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="temperature"
         title={t("temperature_boxplot")}
-        label={t("temperature")}
+        label={t("temperature").toUpperCase()}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
@@ -22,7 +22,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="pH"
         title={t("acidity_boxplot")}
-        label={t("pH")}
+        label={t("pH").toUpperCase()}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
@@ -30,7 +30,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="conductivity"
         title={t("conductivity_boxplot")}
-        label={t("conductivity")}
+        label={t("conductivity").toUpperCase()}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
@@ -38,7 +38,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="oxygen"
         title={t("oxygen_boxplot")}
-        label={t("oxygen")}
+        label={t("oxygen").toUpperCase()}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
@@ -46,7 +46,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="ppm"
         title={t("ppm_boxplot")}
-        label={t("ppm")}
+        label={t("ppm").toUpperCase()}
       />
       <BoxPlotChart
         boxplotData={boxplotData}
@@ -54,7 +54,7 @@ const Analysis = ({ messages }: { messages: Record<string, string> }) => {
         isRefetching={isRefetchingBoxplot}
         sensorType="pm25"
         title={t("pm25_boxplot")}
-        label={t("pm25")}
+        label={t("pm25").toUpperCase()}
       />
     </>
   );

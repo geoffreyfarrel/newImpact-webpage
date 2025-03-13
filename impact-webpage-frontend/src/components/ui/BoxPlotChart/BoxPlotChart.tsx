@@ -11,6 +11,7 @@ import {
   BoxAndWiskers,
 } from "@sgratzl/chartjs-chart-boxplot";
 import { Card, CardBody, CardHeader, Skeleton } from "@heroui/react";
+import { useTheme } from "next-themes";
 
 interface PropTypes {
   boxplotData: BoxPlotData;
@@ -44,14 +45,10 @@ const sensorColors: Record<string, string> = {
 const BoxPlotChart = (props: PropTypes) => {
   const { boxplotData, isLoading, isRefetching, label, sensorType, title } =
     props;
+  const { theme } = useTheme();
 
   // Extract months as labels
   const labels: string[] = boxplotData ? Object.keys(boxplotData) : [];
-
-  // Ensure the selected sensor exists in the dataset
-  const isValidSensor =
-    labels.length > 0 &&
-    boxplotData[labels[0]][sensorType as keyof MonthlySensorData];
 
   // Prepare dataset for the selected sensor
   const dataset = {
@@ -78,18 +75,35 @@ const BoxPlotChart = (props: PropTypes) => {
         display: true,
         position: "top" as const,
         labels: {
+          color: theme === "dark" ? "white" : "black",
           font: {
-            size: 14,
+            size: 24,
+            weight: "bold" as const,
           },
           usePointStyle: true,
         },
       },
     },
     scales: {
+      x: {
+        type: "category" as const, // ✅ Explicitly set type
+        ticks: {
+          color: theme === "dark" ? "white" : "black",
+          font: {
+            size: 14,
+            weight: "bold" as const,
+          },
+        },
+      },
       y: {
         beginAtZero: true,
         min: 0,
         ticks: {
+          color: theme === "dark" ? "white" : "black",
+          font: {
+            size: 14,
+            weight: "bold" as const,
+          },
           stepSize: 5,
         },
       },

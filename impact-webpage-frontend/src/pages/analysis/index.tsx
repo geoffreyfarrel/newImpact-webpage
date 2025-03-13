@@ -1,5 +1,4 @@
 import PageLayout from "@/components/layouts/PageLayout";
-import BoxPlotChart from "@/components/ui/BoxPlotChart";
 import Analysis from "@/components/views/Analysis";
 import { getMessages } from "@/utils/getMessages";
 

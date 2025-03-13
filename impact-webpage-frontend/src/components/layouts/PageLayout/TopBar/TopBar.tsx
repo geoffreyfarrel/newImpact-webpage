@@ -10,14 +10,7 @@ import {
 } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { MdSunny } from "react-icons/md";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 interface PropTypes {
@@ -119,7 +112,7 @@ const TopBar = (props: PropTypes) => {
                         height={100}
                       />
                     }
-                    onClick={() => changeLanguage(locale)}
+                    onPress={() => changeLanguage(locale)}
                   >
                     {localeNames[locale]}
                   </DropdownItem>

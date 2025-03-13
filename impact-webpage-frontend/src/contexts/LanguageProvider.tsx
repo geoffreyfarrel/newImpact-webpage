@@ -25,7 +25,11 @@ const LanguageProvider = ({
 
   return (
     <LanguageContext.Provider value={{ changeLanguage }}>
-      <NextIntlClientProvider locale={router.locale} messages={messages}>
+      <NextIntlClientProvider
+        locale={router.locale}
+        messages={messages}
+        timeZone="Asia/Taipei"
+      >
         {children}
       </NextIntlClientProvider>
     </LanguageContext.Provider>

@@ -1,11 +1,9 @@
-import { INavbarItems } from "@/types/Dashboard";
 import { cn } from "@/utils/cn";
 import { Button, Listbox, ListboxItem } from "@heroui/react";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Dispatch, JSX, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useLayoutNavbarItems } from "../LayoutNavbar.constant";
 
@@ -16,7 +14,6 @@ interface PropTypes {
 
 const LayoutNavbar = (props: PropTypes) => {
   const navbarItems = useLayoutNavbarItems();
-  const t = useTranslations();
   const { isOpen, setIsOpen } = props;
   const router = useRouter();
 

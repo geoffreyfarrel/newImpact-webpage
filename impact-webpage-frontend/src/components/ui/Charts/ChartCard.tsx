@@ -70,12 +70,11 @@ const ChartCard = ({
   setCurrentSensor,
   showDropdown = false,
   dropdownOptions = [],
-  dateRange,
   showDateRange = false,
 }: PropTypes) => {
   const { theme } = useTheme();
 
-  let labels = latestChart?.data.map((item) => {
+  const labels = latestChart?.data.map((item) => {
     const date = new Date(item.createdAt);
     if (!showDateRange) {
       return formatISOTimeWithDate(convertToTaiwanTime(date));

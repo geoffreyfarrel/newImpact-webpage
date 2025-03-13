@@ -2,8 +2,6 @@ import PageHead from "@/components/commons/PageHead";
 import { Fragment, ReactNode, useState } from "react";
 import TopBar from "./TopBar";
 import LayoutNavbar from "./LayoutNavbar";
-import { Button, NavbarMenuToggle } from "@heroui/react";
-import { FaHamburger } from "react-icons/fa";
 import LayoutNavbarMobile from "./LayoutNavbarMobile";
 import Footer from "./Footer";
 

@@ -1,11 +1,9 @@
-import { INavbarItems } from "@/types/Dashboard";
 import { cn } from "@/utils/cn";
-import { Button, Listbox, ListboxItem, navbar } from "@heroui/react";
+import { Button, Listbox, ListboxItem } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Dispatch } from "react";
-import { BiCross } from "react-icons/bi";
-import { RxCross1, RxCross2 } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx";
 import { useLayoutNavbarItems } from "../LayoutNavbar.constant";
 
 interface PropType {

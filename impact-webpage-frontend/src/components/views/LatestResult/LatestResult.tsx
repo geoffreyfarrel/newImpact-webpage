@@ -1,17 +1,11 @@
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
-import Charts from "@/components/ui/Charts";
 import DataTable from "@/components/ui/DataTable";
-import SensorCard from "@/components/ui/SensorCard";
-import {
-  convertToTaiwanTime,
-  formatISOTimeWithDate,
-} from "@/utils/timeFormatter";
-import { Card, CardBody, CardHeader } from "@heroui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import useLatestResult from "./useLatestResult";
 import getColumns from "@/constants/column.constants";
 import { useTranslations } from "next-intl";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LatestResult = ({ messages }: { messages: Record<string, string> }) => {
   const t = useTranslations();
   const {
@@ -24,9 +18,6 @@ const LatestResult = ({ messages }: { messages: Record<string, string> }) => {
     page,
     pagination,
     handleChangePage,
-    setPage,
-    limit,
-    setLimit,
     totalPages,
   } = useLatestResult();
   return (

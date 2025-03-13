@@ -1,9 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { LIMIT_DEFAULT, PAGE_DEFAULT } from "@/constants/list.constants";
-import chartServices from "@/services/chart.services";
 import datatableServices from "@/services/datatable.services";
 import { DateValue, RangeValue } from "@heroui/react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 type SensorKey =
@@ -31,8 +30,6 @@ const useAllResult = () => {
     ),
   );
 
-  const router = useRouter();
-
   const getAllDataTable = async (sensor: SensorKey) => {
     const { page, limit } = pagination[sensor];
     const dateRange = dateRanges[sensor];
@@ -45,7 +42,6 @@ const useAllResult = () => {
     const res = await datatableServices.getAllDataTable(params);
     return res.data;
   };
-
   const queries = Object.fromEntries(
     (Object.keys(pagination) as SensorKey[]).map((sensor) => [
       sensor,

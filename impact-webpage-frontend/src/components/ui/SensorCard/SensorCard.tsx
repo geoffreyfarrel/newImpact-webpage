@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
-import { Badge, Card, CardBody, Skeleton } from "@heroui/react";
-import { ISensorData, MappedSensorData } from "@/types/Sensor";
+import { Card, CardBody, Skeleton } from "@heroui/react";
+import { MappedSensorData } from "@/types/Sensor";
 import { useIndicatorText } from "./SensorCard.constant";
 
 interface PropTypes {

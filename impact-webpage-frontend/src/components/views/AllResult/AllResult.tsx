@@ -1,17 +1,15 @@
-import PageHead from "@/components/commons/PageHead";
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import DataTable from "@/components/ui/DataTable";
 import getColumns from "@/constants/column.constants";
 import { Fragment } from "react";
 import useAllResult from "./useAllResult";
-import { useRouter } from "next/router";
-import { Button, DateRangePicker, DateValue, RangeValue } from "@heroui/react";
+import { Button, DateRangePicker } from "@heroui/react";
 import { SENSORS } from "./AllResult.constanst";
 import { useTranslations } from "next-intl";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AllResult = ({ messages }: { messages: Record<string, string> }) => {
   const t = useTranslations();
-  const { push, isReady, query } = useRouter();
   const {
     pagination,
     dateRanges,
@@ -31,6 +29,7 @@ const AllResult = ({ messages }: { messages: Record<string, string> }) => {
             {/* Date Picker above each table */}
             <div className="mb-4">
               <DateRangePicker
+                aria-label="Select Date Range"
                 className="max-w-72"
                 value={dateRanges[key] || null}
                 onChange={(newRange) => handleChangeDateRange(key, newRange)}

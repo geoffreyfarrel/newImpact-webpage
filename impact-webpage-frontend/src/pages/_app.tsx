@@ -1,12 +1,10 @@
 import AppShell from "@/components/commons/AppShell/AppShell";
 import { WebSocketProvider } from "@/contexts/WebSocketContext";
-import { NextIntlClientProvider } from "next-intl";
 import "@/styles/globals.css";
 import { HeroUIProvider } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { AppContext, AppProps } from "next/app";
-import { useRouter } from "next/router";
 import LanguageProvider from "@/contexts/LanguageProvider";
 import { getMessages } from "@/utils/getMessages";
 
@@ -30,8 +28,6 @@ App.getInitialProps = async (appContext: AppContext) => {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
   return (
     <HeroUIProvider>
       <QueryClientProvider client={queryClient}>
