@@ -122,6 +122,7 @@ const TopBar = (props: PropTypes) => {
           </div>
           <div>
             <Button
+              aria-label="Navigation Bar Toggle"
               className="lg:hidden"
               variant="light"
               onPress={() => setNavBarIsOpen(!navbarIsOpen)}

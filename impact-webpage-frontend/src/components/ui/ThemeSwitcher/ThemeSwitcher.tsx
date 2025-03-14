@@ -55,6 +55,7 @@ const ThemeSwitcher = () => {
 
   return (
     <Button
+      aria-label="Toggle Theme"
       variant="light"
       className="hover:!bg-transparent focus:bg-transparent"
       onPress={toggleTheme}
