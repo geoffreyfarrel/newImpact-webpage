@@ -11,11 +11,11 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-const ResultPage = ({ messages }: { messages: Record<string, string> }) => {
+const ResultPage = () => {
   const t = useTranslations();
   return (
     <PageLayout title={t("latest_result")}>
-      <LatestResult messages={messages} />
+      <LatestResult />
     </PageLayout>
   );
 };

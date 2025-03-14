@@ -3,8 +3,12 @@ import mongoose from "mongoose";
 import * as yup from "yup";
 
 type Pagination = {
-  totalPage: number;
+  totalPages: number;
   current: number;
+  total: number;
+};
+
+type SelectionChart = {
   total: number;
 };
 

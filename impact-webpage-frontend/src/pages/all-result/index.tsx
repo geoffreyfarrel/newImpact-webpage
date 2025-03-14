@@ -1,6 +1,7 @@
 import PageLayout from "@/components/layouts/PageLayout";
 import AllResult from "@/components/views/AllResult";
 import { getMessages } from "@/utils/getMessages";
+import { useTranslations } from "next-intl";
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -10,10 +11,11 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-const AllResultPage = ({ messages }: { messages: Record<string, string> }) => {
+const AllResultPage = () => {
+  const t = useTranslations();
   return (
-    <PageLayout title="All Result">
-      <AllResult messages={messages} />
+    <PageLayout title={t("all_result")}>
+      <AllResult />
     </PageLayout>
   );
 };

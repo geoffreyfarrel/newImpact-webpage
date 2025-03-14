@@ -10,10 +10,10 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-const ResultPage = ({ messages }: { messages: Record<string, string> }) => {
+const ResultPage = () => {
   return (
     <PageLayout title="Charts">
-      <SelectedCharts messages={messages} />
+      <SelectedCharts />
     </PageLayout>
   );
 };

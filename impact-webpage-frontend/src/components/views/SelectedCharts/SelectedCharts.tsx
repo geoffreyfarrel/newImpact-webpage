@@ -5,8 +5,7 @@ import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import { CHART_LIMIT_LISTS } from "@/constants/chart.constants";
 import { useTranslations } from "next-intl";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SelectedCharts = ({ messages }: { messages: Record<string, string> }) => {
+const SelectedCharts = () => {
   const t = useTranslations();
   const {
     getColorPallete,

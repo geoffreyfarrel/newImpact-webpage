@@ -1,36 +1,35 @@
 import { Request, Response } from "express";
-import SensorModel, { searchValidateSchema } from "../models/sensor.model";
+import SensorModel from "../models/sensor.model";
 import response from "../utils/response";
 import {
   AveragedData,
   HourlyAverage,
   IChartPaginationQuery,
+  SensorData,
 } from "../utils/interface";
 import { convertToTaiwanTime, convertToUTCTime } from "../utils/convertUTC";
+import { computeStatsByMonth, groupByMonth } from "../utils/boxplotConvert";
 
 export default {
   async findAll(req: Request, res: Response) {
-    const { startDate, endDate } = req.body as unknown as IChartPaginationQuery;
-    try {
-      const limit = 30;
-      const query = {};
+    const {
+      startDate,
+      endDate,
+      limit = 50,
+    } = req.query as unknown as IChartPaginationQuery;
+    const startSearchDate = convertToUTCTime(startDate as string);
+    const endSearchDate = convertToUTCTime(endDate as string);
 
-      if (startDate && endDate) {
-        await searchValidateSchema.validate({
-          startDate,
-          endDate,
-        });
-        const startDateTime = convertToUTCTime(new Date(startDate));
-        const endDateTime = convertToUTCTime(new Date(endDate));
-        Object.assign(query, {
-          createdAt: {
-            $gte: startDateTime,
-            $lt: endDateTime,
-          },
-        });
+    try {
+      const query: any = {};
+
+      if (startSearchDate && endSearchDate) {
+        query.createdAt = {
+          $gte: startSearchDate,
+          $lt: endSearchDate,
+        };
       }
       const result = await SensorModel.find(query)
-        .limit(limit)
         .sort({ createdAt: 1 })
         .exec();
 
@@ -58,7 +57,7 @@ export default {
         const validPM25 = stepData.filter((item) => item.pm25 != null);
 
         const averagedData: AveragedData = {
-          timestamp: stepData[0]?.createdAt || null, // Use optional chaining for safety
+          createdAt: stepData[0]?.createdAt || null, // Use optional chaining for safety
 
           temperature: validTemperature.length
             ? (
@@ -105,7 +104,6 @@ export default {
                 validPM25.length
               ).toFixed(2)
             : "0.00",
-          index: i,
         };
 
         chartData.push(averagedData);
@@ -116,56 +114,25 @@ export default {
       response.error(res, error, "Failed to get chart data");
     }
   },
-  async findLatest(req: Request, res: Response) {
+  async findAllBoxPlot(req: Request, res: Response) {
+    const sensorFields: (keyof SensorData)[] = [
+      "temperature",
+      "pH",
+      "conductivity",
+      "oxygen",
+      "ppm",
+      "pm25",
+    ];
     try {
-      const result = await SensorModel.find()
-        .sort({ createdAt: -1 })
-        .limit(144);
-      const reversedResult = result.reverse();
+      const data = await SensorModel.find();
 
-      // Calculate hourly averages (6 data points per hour)
-      const hourlyAverages: HourlyAverage[] = [];
-      for (let i = 0; i < 24; i++) {
-        const start = i * 6;
-        const end = start + 6;
-        const hourData = reversedResult.slice(start, end);
+      const groupedByMonth = groupByMonth(data, sensorFields);
 
-        // Calculate the average for this hour
-        const hourAvg = hourData.reduce(
-          (sum, item) => {
-            return {
-              temperature: sum.temperature + (item.temperature ?? 0) / 6,
-              pH: sum.pH + (item.pH ?? 0) / 6,
-              conductivity: sum.conductivity + (item.conductivity ?? 0) / 6,
-              oxygen: sum.oxygen + (item.oxygen ?? 0) / 6,
-              ppm: sum.ppm + (item.ppm ?? 0) / 6,
-              pm25: sum.pm25 + (item.pm25 ?? 0) / 6,
-              index: i,
-            };
-          },
-          { temperature: 0, pH: 0, conductivity: 0, oxygen: 0, ppm: 0, pm25: 0 }
-        );
+      const statsByMonth = computeStatsByMonth(groupedByMonth);
 
-        // Round the timestamp to the start of the hour
-        const roundedDate = new Date(hourData[0].createdAt ?? new Date());
-        roundedDate.setMinutes(0, 0, 0); // Set minutes, seconds, and milliseconds to zero
-
-        // Format values to 2 decimal places and add to hourly averages
-        hourlyAverages.push({
-          createdAt: roundedDate,
-          temperature: parseFloat(hourAvg.temperature.toFixed(2)),
-          pH: parseFloat(hourAvg.pH.toFixed(2)),
-          conductivity: parseFloat(hourAvg.conductivity.toFixed(2)),
-          oxygen: parseFloat(hourAvg.oxygen.toFixed(2)),
-          ppm: parseFloat(hourAvg.ppm.toFixed(2)),
-          pm25: parseFloat(hourAvg.pm25.toFixed(2)),
-          index: i,
-        });
-      }
-
-      response.success(res, hourlyAverages, "Success get chart data");
+      response.success(res, statsByMonth, "Success get boxplot min data");
     } catch (error) {
-      response.error(res, error, "Failed to get chart data");
+      response.error(res, error, "Failed to get boxplot min data");
     }
   },
 };

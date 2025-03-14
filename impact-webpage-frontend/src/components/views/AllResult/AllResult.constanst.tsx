@@ -1,35 +1,41 @@
 import { SensorKey } from "@/types/Sensor";
+import { useTranslations } from "next-intl";
 
-export const SENSORS: { key: SensorKey; title: string; description: string }[] =
-  [
+const useGetSensors = () => {
+  const t = useTranslations(); // ✅ Now inside a function!
+
+  return [
     {
       key: "temperature",
-      title: "Measured Water Temperature Value",
-      description: "Measured Water Temperature Value (°C)",
+      title: t("temperature_table_title"),
+      description: t("measured_temperature"),
     },
     {
       key: "pH",
-      title: "Measured Water Acidity Value",
-      description: "Measured Acidity (pH)",
+      title: t("acidity_table_title"),
+      description: t("measured_acidity"),
     },
     {
       key: "conductivity",
-      title: "Measured Water Conductivity Value",
-      description: "Measured Water Conductivity (S/m)",
+      title: t("conductivity_table_title"),
+      description: t("measured_conductivity"),
     },
     {
       key: "oxygen",
-      title: "Measured Water Dissolved Oxygen Value",
-      description: "Measured Water Dissolved Oxygen (mg/L)",
+      title: t("oxygen_table_title"),
+      description: t("measured_oxygen"),
     },
     {
       key: "ppm",
-      title: "Measured Water Dissolved Solid Value",
-      description: "Measured Water Dissolved Solid (ppm)",
+      title: t("ppm_table_title"),
+      description: t("measured_ppm"),
     },
     {
       key: "pm25",
-      title: "Measured PM2.5 (Air Pollution) Value",
-      description: "Measured PM2.5 (Air Pollution) (µg/m³)",
+      title: t("measured_pm25"),
+      description: t("measured_pm25"),
     },
-  ];
+  ] as { key: SensorKey; title: string; description: string }[];
+};
+
+export default useGetSensors;

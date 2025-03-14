@@ -6,7 +6,7 @@ import getColumns from "@/constants/column.constants";
 import { useTranslations } from "next-intl";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LatestResult = ({ messages }: { messages: Record<string, string> }) => {
+const LatestResult = () => {
   const t = useTranslations();
   const {
     temperatureDataTableData,

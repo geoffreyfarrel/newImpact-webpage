@@ -4,11 +4,11 @@ import getColumns from "@/constants/column.constants";
 import { Fragment } from "react";
 import useAllResult from "./useAllResult";
 import { Button, DateRangePicker } from "@heroui/react";
-import { SENSORS } from "./AllResult.constanst";
 import { useTranslations } from "next-intl";
+import useGetSensors from "./AllResult.constanst";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const AllResult = ({ messages }: { messages: Record<string, string> }) => {
+const AllResult = () => {
   const t = useTranslations();
   const {
     pagination,
@@ -19,11 +19,13 @@ const AllResult = ({ messages }: { messages: Record<string, string> }) => {
     handleChangeDateRange,
   } = useAllResult();
 
+  const sensors = useGetSensors();
+
   return (
     <Fragment>
       <PageTitle title={t("all_result")} />
 
-      {SENSORS.map(({ key, title, description }) => (
+      {sensors.map(({ key, title, description }) => (
         <div key={key} className="mb-8 border-b border-gray-300 p-4">
           <div className="flex flex-row gap-2">
             {/* Date Picker above each table */}
