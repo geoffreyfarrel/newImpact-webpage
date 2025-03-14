@@ -44,10 +44,13 @@ const ThemeSwitcher = () => {
     setManualOverride(true);
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
-    // 🔥 Debug: Reset override after 10 seconds instead of 1 min
-    setTimeout(() => {
-      setManualOverride(false);
-    }, 5 * 1000);
+    // 🔥 Debug: Reset override after 15 minutes
+    setTimeout(
+      () => {
+        setManualOverride(false);
+      },
+      15 * 60 * 1000,
+    );
   };
 
   return (
