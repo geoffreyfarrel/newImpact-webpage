@@ -176,7 +176,7 @@ const ChartCard = ({
         <div>{title}</div>
         {showDateRange && (
           <div className="font-semibold">
-            {dateStart} - {dateEnd}
+            {dateStart} / {dateEnd}
           </div>
         )}
         {showDropdown && setCurrentSensor && (
