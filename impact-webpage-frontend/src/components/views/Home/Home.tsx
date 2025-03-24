@@ -16,14 +16,15 @@ const Home = ({ messages }: { messages: Record<string, string> }) => {
     latestSensor,
     currentSensor,
     setCurrentSensor,
+
+    dataLatestPrediction,
   } = useHome();
+
+  // console.log(dataLatestPrediction);
 
   return (
     <Fragment>
-      <h1
-        // style={{ whiteSpace: "pre-line" }}
-        className="m-4 whitespace-pre-line text-center text-lg font-semibold md:text-2xl lg:text-3xl"
-      >
+      <h1 className="m-4 whitespace-pre-line text-center text-lg font-semibold md:text-2xl lg:text-3xl">
         {t("project_title")}
       </h1>
       <PageTitle title={t("home")} />
@@ -89,56 +90,56 @@ const Home = ({ messages }: { messages: Record<string, string> }) => {
         </Card>
       </div>
       <div>
-        <ChartCard
+        {/* <ChartCard
           title={t("predicted_chart")}
           colorPallete={colorPallete}
           latestChart={latestChart}
           currentSensor={currentSensor}
           setCurrentSensor={setCurrentSensor}
-        />
+        /> */}
         <Card className="mb-4 p-2 dark:bg-primary-800">
           <CardHeader>{t("predicted_result")}</CardHeader>
           <CardBody>
             <div>
               <SensorCard
                 isTimeCard
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("time")}
                 sensorType="createdAt"
               />
             </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-1 md:grid-cols-2 lg:grid-cols-3">
               <SensorCard
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("temperature")}
                 sensorType="temperature"
               />
               <SensorCard
                 isIndicator
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("pH")}
                 sensorType="pH"
               />
               <SensorCard
                 isIndicator
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("oxygen")}
                 sensorType="oxygen"
               />
               <SensorCard
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("conductivity")}
                 sensorType="conductivity"
               />
               <SensorCard
                 isIndicator
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("ppm")}
                 sensorType="ppm"
               />
               <SensorCard
                 isIndicator
-                latestSensor={latestSensor}
+                latestSensor={dataLatestPrediction}
                 sensorName={t("pm25")}
                 sensorType="pm25"
               />

@@ -162,5 +162,16 @@
   "pm25_boxplot": "每月PM2.5（空氣品質）",
   "predicted_chart": "預測圖標表",
   "predicted_result": "預測結果",
-  "submit": "送出"
+  "submit": "送出",
+  "gru_prediction": "GRU預測",
+  "measured_value": "感測值",
+  "sensor": "感測器",
+  "1hour": "預測1小時",
+  "2hour": "預測2小時",
+  "3hour": "預測3小時",
+  "4hour": "預測4小時",
+  "5hour": "預測5小時",
+  "6hour": "預測6小時",
+  "7hour": "預測7小時",
+  "8hour": "預測8小時"
 }

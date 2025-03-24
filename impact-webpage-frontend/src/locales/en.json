@@ -162,5 +162,16 @@
   "pm25_boxplot": "Monthly PM2.5 (Air Pollution) BoxPlot Chart",
   "predicted_chart": "Predicted Chart",
   "predicted_result": "Predicted Result",
-  "submit": "Submit"
+  "submit": "Submit",
+  "gru_prediction": "GRU Prediction",
+  "sensor": "Sensor",
+  "measured_value": "Measured Value",
+  "1hour": "Prediction 1Hr",
+  "2hour": "Prediction 2Hr",
+  "3hour": "Prediction 3Hr",
+  "4hour": "Prediction 4Hr",
+  "5hour": "Prediction 5Hr",
+  "6hour": "Prediction 6Hr",
+  "7hour": "Prediction 7Hr",
+  "8hour": "Prediction 8Hr"
 }

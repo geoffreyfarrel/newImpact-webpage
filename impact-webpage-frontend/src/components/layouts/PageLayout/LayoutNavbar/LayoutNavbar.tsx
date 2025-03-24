@@ -38,7 +38,7 @@ const LayoutNavbar = (props: PropTypes) => {
         >
           <Link className="flex items-center gap-4" href="/">
             <Image
-              src={"logo.svg"}
+              src={"/img/logo-only-white.svg"}
               alt="logo"
               width={isOpen ? 180 : 90} // Resize logo dynamically
               height={isOpen ? 60 : 30} // Resize height dynamically

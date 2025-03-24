@@ -1,9 +1,10 @@
 import PageTitle from "@/components/layouts/PageLayout/PageTitle";
 import DataTable from "@/components/ui/DataTable";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import useLatestResult from "./useLatestResult";
 import getColumns from "@/constants/column.constants";
 import { useTranslations } from "next-intl";
+import { Card, Skeleton } from "@heroui/react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const LatestResult = () => {
@@ -20,6 +21,21 @@ const LatestResult = () => {
     handleChangePage,
     totalPages,
   } = useLatestResult();
+
+  const [mounted, setMounted] = useState(false);
+  // Only set mounted state to true once the component is mounted on the client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Card className="h-screen">
+        <Skeleton className="h-[100%] w-full" />
+      </Card>
+    );
+  }
+
   return (
     <Fragment>
       <PageTitle title={t("latest_result")} />

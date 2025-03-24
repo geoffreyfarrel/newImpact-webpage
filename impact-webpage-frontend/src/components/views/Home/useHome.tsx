@@ -3,6 +3,13 @@ import {
   SENSOR_TYPES,
 } from "@/components/ui/Charts/ChartCard.constant";
 import { useWebSocket } from "@/contexts/WebSocketContext";
+import predictionServices from "@/services/prediction.services";
+import {
+  convertToTaiwanTime,
+  formatISOTimeWithDate,
+} from "@/utils/timeFormatter";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 const useHome = () => {
@@ -11,6 +18,7 @@ const useHome = () => {
   const [currentSensor, setCurrentSensor] =
     useState<(typeof SENSOR_TYPES)[number]>("pH");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isReady } = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,12 +47,31 @@ const useHome = () => {
       : COLOR_PALETTE_CHART.default(latestChart?.data?.map(() => 0) || []);
   }, [latestChart, currentSensor]);
 
+  const getLatestPrediction = async () => {
+    const { data } = await predictionServices.getLatestPrediction();
+    if (data?.data.timestamp) {
+      data.data.timestamp = formatISOTimeWithDate(
+        convertToTaiwanTime(data.data.timestamp),
+      );
+    }
+
+    return data.data;
+  };
+
+  const { data: dataLatestPrediction } = useQuery({
+    queryKey: ["Prediction"],
+    queryFn: () => getLatestPrediction(),
+    enabled: isReady,
+  });
+
   return {
     colorPallete,
     latestChart,
     latestSensor,
     currentSensor,
     setCurrentSensor,
+
+    dataLatestPrediction,
   };
 };
 

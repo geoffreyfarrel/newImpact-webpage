@@ -2,14 +2,26 @@ import { cn } from "@/utils/cn";
 import { Card, CardBody, Skeleton } from "@heroui/react";
 import { MappedSensorData } from "@/types/Sensor";
 import { useIndicatorText } from "./SensorCard.constant";
+import { PredictionRecord, Predictions } from "@/types/Prediction";
 
 interface PropTypes {
   isTimeCard?: boolean;
-  latestSensor: MappedSensorData | null;
+  latestSensor: MappedSensorData | PredictionRecord | null;
   sensorName: string;
   sensorType: string;
   isIndicator?: boolean;
 }
+
+const isMappedSensorData = (
+  sensor: MappedSensorData | PredictionRecord,
+): sensor is MappedSensorData =>
+  sensor && typeof sensor === "object" && !("predictions" in sensor);
+
+// Type guard for PredictionRecord
+const isPredictionRecord = (
+  sensor: MappedSensorData | PredictionRecord,
+): sensor is PredictionRecord =>
+  sensor && typeof sensor === "object" && "predictions" in sensor;
 
 const SensorCard = (props: PropTypes) => {
   const indicatorText = useIndicatorText();
@@ -62,27 +74,45 @@ const SensorCard = (props: PropTypes) => {
                 </h3>
               )}
               <h4 className={cn("text-lg", { "font-semibold": isTimeCard })}>
-                {latestSensor?.[sensorType as keyof MappedSensorData].value}
+                {latestSensor &&
+                  (isMappedSensorData(latestSensor)
+                    ? latestSensor[sensorType as keyof MappedSensorData]?.value
+                    : isPredictionRecord(latestSensor) &&
+                        "predictions" in latestSensor
+                      ? sensorType === "createdAt"
+                        ? latestSensor.timestamp // Use timestamp if sensorType is "createdAt" in PredictionRecord
+                        : (sensorType as keyof Predictions) in
+                            latestSensor.predictions
+                          ? latestSensor.predictions[
+                              sensorType as keyof Predictions
+                            ][0]
+                          : "No Data"
+                      : "No Data")}
               </h4>
             </div>
             {isIndicator && (
               <div className="flex flex-col items-end gap-1 text-right">
-                <h4 className="text-sm md:text-base lg:text-xl">
-                  {indicatorText[sensorType as keyof typeof indicatorText](
-                    Number(
-                      latestSensor?.[sensorType as keyof MappedSensorData]
-                        .value,
-                    ), // ✅ Convert value to number
-                  )}
-                </h4>
-                <div
-                  className="h-10 w-10 rounded-full"
-                  style={{
-                    backgroundColor:
-                      latestSensor?.[sensorType as keyof MappedSensorData]
-                        .color,
-                  }}
-                ></div>
+                {isMappedSensorData(latestSensor) && (
+                  <h4 className="text-sm md:text-base lg:text-xl">
+                    {indicatorText[sensorType as keyof typeof indicatorText](
+                      Number(
+                        latestSensor[sensorType as keyof MappedSensorData]
+                          ?.value,
+                      ),
+                    )}
+                  </h4>
+                )}
+
+                {isMappedSensorData(latestSensor) && (
+                  <div
+                    className="h-10 w-10 rounded-full"
+                    style={{
+                      backgroundColor:
+                        latestSensor[sensorType as keyof MappedSensorData]
+                          ?.color,
+                    }}
+                  ></div>
+                )}
               </div>
             )}
           </CardBody>
