@@ -2,4 +2,4 @@
 
 ## Overview
 
-Refactoring old website into more structured codes, improving UI and adding more features (On Progress)
+Refactoring old website into more structured codes, improving UI and adding more features
