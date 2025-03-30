@@ -1,10 +1,17 @@
-const DROPDOWN_CONSTANTS = [
-  { key: "temperature", label: "Temperature" },
-  { key: "pH", label: "Acidity" },
-  { key: "conductivity", label: "Conductivity" },
-  { key: "oxygen", label: "Dissolved Oxygen" },
-  { key: "ppm", label: "Dissolved Solid" },
-  { key: "pm25", label: "PM2.5 (Air Pollution)" },
-];
+import { useTranslations } from "next-intl";
 
-export default DROPDOWN_CONSTANTS;
+const useHomeConstants = () => {
+  const t = useTranslations();
+  const DROPDOWN_CONSTANTS = [
+    { key: "temperature", label: t("temperature") },
+    { key: "pH", label: t("pH") },
+    { key: "conductivity", label: t("conductivity") },
+    { key: "oxygen", label: t("oxygen") },
+    { key: "ppm", label: t("ppm") },
+    { key: "pm25", label: t("pm25") },
+  ];
+
+  return DROPDOWN_CONSTANTS;
+};
+
+export default useHomeConstants;

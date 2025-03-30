@@ -4,8 +4,8 @@ import { Card, CardBody, CardHeader } from "@heroui/react";
 import { Fragment } from "react";
 import useHome from "./useHome";
 import ChartCard from "@/components/ui/Charts";
-import DROPDOWN_CONSTANTS from "./Home.constants";
 import { useTranslations } from "next-intl";
+import useHomeConstants from "./Home.constants";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Home = ({ messages }: { messages: Record<string, string> }) => {
@@ -20,7 +20,9 @@ const Home = ({ messages }: { messages: Record<string, string> }) => {
     dataLatestPrediction,
   } = useHome();
 
-  console.log(latestChart);
+  const DROPDOWN_CONSTANTS = useHomeConstants();
+
+  // console.log(latestChart);
 
   return (
     <Fragment>
