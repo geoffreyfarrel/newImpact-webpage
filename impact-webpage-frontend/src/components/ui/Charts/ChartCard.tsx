@@ -79,7 +79,7 @@ const ChartCard = ({
     if (!showDateRange) {
       return formatISOTimeWithDate(convertToTaiwanTime(date));
     }
-    return formatOnlyTime(formatISOTimeWithDate(convertToTaiwanTime(date)));
+    return formatOnlyTime(convertToTaiwanTime(date));
   });
 
   const data = {

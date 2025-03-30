@@ -20,7 +20,7 @@ const Home = ({ messages }: { messages: Record<string, string> }) => {
     dataLatestPrediction,
   } = useHome();
 
-  // console.log(dataLatestPrediction);
+  console.log(latestChart);
 
   return (
     <Fragment>
