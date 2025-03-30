@@ -28,48 +28,59 @@ export default class SensorController {
     try {
       const result = await SensorModel.find()
         .sort({ createdAt: -1 })
-        .limit(144);
-      const reversedResult = result.reverse();
+        .limit(144); // Latest 144 records
 
-      // Calculate hourly averages (6 data points per hour)
+      const reversedResult = [...result].reverse(); // Oldest to newest
+
+      // Group by hour (e.g., 15:00)
+      const hourlyGroups: { [hourKey: string]: typeof result } = {};
+
+      reversedResult.forEach((item) => {
+        const date = new Date(item.createdAt);
+        date.setMinutes(0, 0, 0); // Round to the hour
+        const hourKey = date.toISOString();
+
+        if (!hourlyGroups[hourKey]) {
+          hourlyGroups[hourKey] = [];
+        }
+        hourlyGroups[hourKey].push(item);
+      });
+
+      // Sort keys chronologically and take last 24 hours
+      const last24Hours = Object.entries(hourlyGroups)
+        .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
+        .slice(-24);
+
       const hourlyAverages: HourlyAverage[] = [];
-      for (let i = 0; i < 24; i++) {
-        const start = i * 6;
-        const end = start + 6;
-        const hourData = reversedResult.slice(start, end);
 
-        // Calculate the average for this hour
-        const hourAvg = hourData.reduce(
-          (sum, item) => {
-            return {
-              temperature: sum.temperature + (item.temperature ?? 0) / 6,
-              pH: sum.pH + (item.pH ?? 0) / 6,
-              conductivity: sum.conductivity + (item.conductivity ?? 0) / 6,
-              oxygen: sum.oxygen + (item.oxygen ?? 0) / 6,
-              ppm: sum.ppm + (item.ppm ?? 0) / 6,
-              pm25: sum.pm25 + (item.pm25 ?? 0) / 6,
-              index: i,
-            };
-          },
+      last24Hours.forEach(([hourKey, group], i) => {
+        const count = group.length;
+
+        const hourAvg = group.reduce(
+          (sum, item) => ({
+            temperature: sum.temperature + (item.temperature ?? 0),
+            pH: sum.pH + (item.pH ?? 0),
+            conductivity: sum.conductivity + (item.conductivity ?? 0),
+            oxygen: sum.oxygen + (item.oxygen ?? 0),
+            ppm: sum.ppm + (item.ppm ?? 0),
+            pm25: sum.pm25 + (item.pm25 ?? 0),
+          }),
           { temperature: 0, pH: 0, conductivity: 0, oxygen: 0, ppm: 0, pm25: 0 }
         );
 
-        // Round the timestamp to the start of the hour
-        const roundedDate = new Date(hourData[0].createdAt ?? new Date());
-        roundedDate.setMinutes(0, 0, 0); // Set minutes, seconds, and milliseconds to zero
-
-        // Format values to 2 decimal places and add to hourly averages
+        // Calculate averages
         hourlyAverages.push({
-          createdAt: roundedDate,
-          temperature: parseFloat(hourAvg.temperature.toFixed(2)),
-          pH: parseFloat(hourAvg.pH.toFixed(2)),
-          conductivity: parseFloat(hourAvg.conductivity.toFixed(2)),
-          oxygen: parseFloat(hourAvg.oxygen.toFixed(2)),
-          ppm: parseFloat(hourAvg.ppm.toFixed(2)),
-          pm25: parseFloat(hourAvg.pm25.toFixed(2)),
+          createdAt: new Date(hourKey),
+          temperature: parseFloat((hourAvg.temperature / count).toFixed(2)),
+          pH: parseFloat((hourAvg.pH / count).toFixed(2)),
+          conductivity: parseFloat((hourAvg.conductivity / count).toFixed(2)),
+          oxygen: parseFloat((hourAvg.oxygen / count).toFixed(2)),
+          ppm: parseFloat((hourAvg.ppm / count).toFixed(2)),
+          pm25: parseFloat((hourAvg.pm25 / count).toFixed(2)),
           index: i,
         });
-      }
+      });
+
       socketResponse.success(
         io,
         "LatestChartSensorData",

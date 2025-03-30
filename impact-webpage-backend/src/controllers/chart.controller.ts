@@ -3,11 +3,10 @@ import SensorModel from "../models/sensor.model";
 import response from "../utils/response";
 import {
   AveragedData,
-  HourlyAverage,
   IChartPaginationQuery,
   SensorData,
 } from "../utils/interface";
-import { convertToTaiwanTime, convertToUTCTime } from "../utils/convertUTC";
+import { convertToUTCTime } from "../utils/convertUTC";
 import { computeStatsByMonth, groupByMonth } from "../utils/boxplotConvert";
 
 export default {
