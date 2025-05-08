@@ -54,6 +54,13 @@ export default {
         data: _err,
       });
     }
+    return res.status(500).json({
+      meta: {
+        status: 500,
+        message: message || "Unknown error occurred",
+      },
+      data: error,
+    });
   },
   pagination(
     res: Response,

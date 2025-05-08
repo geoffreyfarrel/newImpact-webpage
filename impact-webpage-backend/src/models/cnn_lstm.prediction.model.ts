@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const PredictionFrontendSchema = new Schema({
+const CNN_LSTMPredictionSchema = new Schema({
   timestamp: {
     type: Schema.Types.String,
     required: true,
@@ -35,10 +35,10 @@ const PredictionFrontendSchema = new Schema({
   },
 });
 
-const PredictionFrontendModel = mongoose.model(
-  "PredictionsForFrontEnd",
-  PredictionFrontendSchema,
-  "predictions_for_frontend"
+const CNN_LSTMPredictionModel = mongoose.model(
+  "CNN_LSTMPredictions",
+  CNN_LSTMPredictionSchema,
+  "CNN_LSTM_prediction"
 );
 
-export default PredictionFrontendModel;
+export default CNN_LSTMPredictionModel;

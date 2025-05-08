@@ -22,7 +22,7 @@ async function init() {
     app.use(cors());
     app.use(bodyParser.json());
 
-    const PORT = 5008;
+    const PORT = 3000;
 
     // Check api running
     app.get("/", (req, res) => {

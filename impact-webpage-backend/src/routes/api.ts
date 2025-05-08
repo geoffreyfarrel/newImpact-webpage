@@ -9,6 +9,6 @@ router.get("/datatable", datatableController.findAll);
 router.get("/chart", chartController.findAll);
 router.get("/boxplot", chartController.findAllBoxPlot);
 router.get("/prediction/latest", predictionsController.findLatest);
-router.get("/prediction/all", predictionsController.findLatestFrontend);
+router.get("/prediction/:modelType", predictionsController.findLatestFrontend);
 
 export default router;
