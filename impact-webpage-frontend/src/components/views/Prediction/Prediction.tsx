@@ -17,13 +17,22 @@ import {
 } from "@heroui/react";
 import { SensorPredictionRow } from "@/types/Prediction";
 import usePredictionColumns from "./Prediction.columns.constant";
+import ModelButton from "@/components/ui/ModelButton";
+import { useModelNames } from "./Prediction.models.constant";
 
 const Prediction = () => {
   const t = useTranslations();
-  const { dataPredictionDisplay, measuredTime, predictionTime } =
-    usePrediction();
+  const {
+    activeModel,
+    setActiveModel,
+    handleChangeActiveModel,
+    dataPredictionDisplay,
+    measuredTime,
+    predictionTime,
+  } = usePrediction();
 
   const PREDICTIONS_COLUMNS = usePredictionColumns(predictionTime);
+  const MODEL_NAMES = useModelNames();
 
   const [mounted, setMounted] = useState(false);
   // Only set mounted state to true once the component is mounted on the client
@@ -43,11 +52,21 @@ const Prediction = () => {
   return (
     <Fragment>
       <PageTitle title={t("prediction")} />
+      <div className="m-4 flex w-full flex-row">
+        {MODEL_NAMES.map((model) => (
+          <ModelButton
+            key={model.key}
+            name={model.label}
+            onClick={() => handleChangeActiveModel(model.key)}
+            isActive={model.key === activeModel}
+          />
+        ))}
+      </div>
       <Card className="rounded-lg border-1 dark:border-gray-800 dark:bg-primary-800">
         <CardHeader className="flex flex-col gap-3">
           <div className="w-1/4 justify-start rounded-lg bg-teal-500 p-2 dark:bg-primary-400">
-            <h1 className="text-center text-sm font-semibold text-white">
-              {t("gru_prediction")}
+            <h1 className="text-center text-sm font-semibold uppercase text-white">
+              {t(`${activeModel}`)}
             </h1>
           </div>
           <Divider />

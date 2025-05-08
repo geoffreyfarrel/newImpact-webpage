@@ -11,14 +11,20 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 const usePrediction = () => {
+  const t = useTranslations();
   const router = useRouter();
   const { latestSensor } = useWebSocket();
   const [refetching, setRefetching] = useState(false);
-  const t = useTranslations();
+  const [activeModel, setActiveModel] = useState("gru");
 
   const getLatestDisplayPredictions = async () => {
-    const { data } = await predictionServices.getLatestDisplayPredictions();
+    const { data } =
+      await predictionServices.getLatestDisplayPredictions(activeModel);
     return data.data;
+  };
+
+  const handleChangeActiveModel = (model: string) => {
+    setActiveModel(model);
   };
 
   const {
@@ -59,6 +65,10 @@ const usePrediction = () => {
       setRefetching(false); // Stop refetching when the new data is different from last data
     }
   }, [data, lastData, refetching]);
+
+  useEffect(() => {
+    refetchPredictionDisplay();
+  }, [activeModel]);
 
   const dataPredictionDisplay: SensorPredictionRow[] = useMemo(() => {
     if (!data?.predictions || !latestSensor) return [];
@@ -154,6 +164,9 @@ const usePrediction = () => {
   }, [data]);
 
   return {
+    activeModel,
+    handleChangeActiveModel,
+    setActiveModel,
     dataPredictionDisplay,
     predictionTime,
     latestSensor,

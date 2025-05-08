@@ -3,7 +3,8 @@ import endpoint from "./endpoint.constant";
 
 const predictionServices = {
   getLatestPrediction: () => instance.get(`${endpoint.PREDICTION}/latest`),
-  getLatestDisplayPredictions: () => instance.get(`${endpoint.PREDICTION}/all`),
+  getLatestDisplayPredictions: (modelType?: string) =>
+    instance.get(`${endpoint.PREDICTION}/${modelType}`),
 };
 
 export default predictionServices;
