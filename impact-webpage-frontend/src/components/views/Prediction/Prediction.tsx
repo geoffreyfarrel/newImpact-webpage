@@ -24,7 +24,6 @@ const Prediction = () => {
   const t = useTranslations();
   const {
     activeModel,
-    setActiveModel,
     handleChangeActiveModel,
     dataPredictionDisplay,
     measuredTime,
