@@ -78,8 +78,8 @@ A comprehensive web application for real-time environmental monitoring, data ana
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
-   cd newIMPACT-web2
+   git clone https://github.com/geoffreyfarrel/newImpact-webpage.git
+   cd newImpact-webpage
    ```
 
 2. **Backend Setup**
@@ -115,7 +115,7 @@ Create a `.env` file in the backend directory:
 
 ```env
 # Database Configuration
-MONGODB_URI=mongodb://localhost:27017/impact-db
+MONGODB_URI=mongodb://<dbURL:PORT>/impact-db
 
 # Server Configuration
 PORT=3000
@@ -128,7 +128,7 @@ CORS_ORIGIN=http://localhost:5010
 ## 📁 Project Structure
 
 ```
-newIMPACT-web2/
+newImpact-webpage/
 ├── impact-webpage-backend/          # Backend API server
 │   ├── src/
 │   │   ├── controllers/            # API controllers
